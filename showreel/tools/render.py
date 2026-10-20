@@ -10,6 +10,7 @@ ap.add_argument('html'); ap.add_argument('outdir')
 ap.add_argument('--fps', type=int, default=30); ap.add_argument('--dur', type=float, default=48.0)
 ap.add_argument('--times', default=None, help='comma list of seconds to render as preview')
 ap.add_argument('--start', type=int, default=0)
+ap.add_argument('--width', type=int, default=1920); ap.add_argument('--height', type=int, default=1080)
 a = ap.parse_args()
 os.makedirs(a.outdir, exist_ok=True)
 
@@ -17,7 +18,7 @@ async def main():
     async with async_playwright() as p:
         exe = '/opt/pw-browsers/chromium' if os.path.exists('/opt/pw-browsers/chromium') else None
         b = await p.chromium.launch(executable_path=exe, args=['--disable-gpu', '--font-render-hinting=none', '--force-color-profile=srgb', '--hide-scrollbars'])
-        pg = await b.new_page(viewport={'width': 1920, 'height': 1080}, device_scale_factor=1)
+        pg = await b.new_page(viewport={'width': a.width, 'height': a.height}, device_scale_factor=1)
         await pg.goto('file://' + os.path.abspath(a.html))
         await pg.evaluate('document.fonts.ready')
         await pg.evaluate('''() => Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; })))''')

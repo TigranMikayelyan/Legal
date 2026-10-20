@@ -2,8 +2,9 @@
 
 48-second, 1920x1080, 30 fps motion-design showreel for SkyPivot Drone Services.
 
-- `SkyPivot_Showreel_2026.mp4` — the finished video (H.264 + AAC).
-- `showreel.html` — the animation itself. Open it in a browser for a live loop preview. Every scene is driven by a single `seek(t)` function, so any frame can be rendered deterministically.
+- `SkyPivot_Showreel_2026.mp4` — the finished 16:9 video, 1920x1080 (H.264 + AAC).
+- `SkyPivot_Showreel_2026_9x16.mp4` — the vertical 9:16 cut, 1080x1920, for Reels / Shorts / TikTok.
+- `showreel.html` — the 16:9 animation. `showreel_vertical.html` is the same timeline re-laid out for 9:16. Open it in a browser for a live loop preview. Every scene is driven by a single `seek(t)` function, so any frame can be rendered deterministically.
 - `assets/` — the photographs and keyed logo used in the piece.
 - `tools/prep_assets.py` — converts the raw uploads into the named assets and keys the logo background out.
 - `tools/render.py` — renders `showreel.html` to PNG frames with headless Chromium (Playwright).
@@ -13,6 +14,7 @@
 
 ```bash
 python3 tools/render.py showreel.html frames            # ~1440 PNG frames
+python3 tools/render.py showreel_vertical.html frames_v --width 1080 --height 1920   # 9:16
 python3 tools/audio.py soundtrack.wav
 ffmpeg -framerate 30 -i frames/f_%05d.png -i soundtrack.wav \
   -c:v libx264 -preset slow -crf 17 -pix_fmt yuv420p -c:a aac -b:a 192k \
