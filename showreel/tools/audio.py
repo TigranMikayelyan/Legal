@@ -180,7 +180,7 @@ for k in range(5): add(sfx_l, sfx_r, shutter(0.28), 5.7 + k * 0.92, pan=0.35)
 # timeline dot travel + labels
 for n in range(5): add(sfx_l, sfx_r, blip(0.14, 1000 + n * 120, 700 + n * 120), 10.7 + n * 0.4, pan=-0.7 + n * 0.35)
 # chips
-for n in range(4): add(sfx_l, sfx_r, blip(0.16, 1300, 900), 15.7 + n * 0.4, pan=-0.5)
+for n in range(7): add(sfx_l, sfx_r, blip(0.14, 1300, 900), 15.45 + n * 0.27, pan=-0.5)
 # chart draw hum + dot
 hum = np.sin(2 * np.pi * np.cumsum(300 * 2 ** (np.linspace(0, 1.6, int(1.4 * SR)))) / SR) * np.sin(np.linspace(0, np.pi, int(1.4 * SR))) * 0.05
 add(sfx_l, sfx_r, hum, 18.5, pan=0.4); add(sfx_l, sfx_r, blip(0.2, 1600, 1100), 18.9, pan=0.4)

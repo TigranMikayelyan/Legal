@@ -15,10 +15,10 @@
   .grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:96px 96px;background-position:48px 36px}
   .vig{position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(0,0,0,0) 45%,rgba(0,0,0,.55) 100%);pointer-events:none}
   .ph{position:absolute;inset:0;background-size:cover;background-position:center;will-change:transform}
-  .mono{font-family:'JetBrains Mono',monospace;font-weight:500;letter-spacing:.18em;text-transform:uppercase;font-size:13px;color:var(--mute)}
+  .mono{font-family:'JetBrains Mono',monospace;font-weight:500;letter-spacing:.18em;text-transform:uppercase;font-size:16px;color:var(--mute)}
   .mono.teal{color:var(--teal)}
   .mono.white{color:var(--ink)}
-  .kick{font-family:'JetBrains Mono',monospace;font-weight:500;letter-spacing:.22em;text-transform:uppercase;font-size:14px;color:var(--teal)}
+  .kick{font-family:'JetBrains Mono',monospace;font-weight:500;letter-spacing:.22em;text-transform:uppercase;font-size:17px;color:var(--teal)}
   .h{font-weight:700;font-size:84px;line-height:1.04;letter-spacing:-.025em;color:var(--ink)}
   .h .t{color:var(--teal)}
   .rv{overflow:hidden;display:block}
@@ -28,14 +28,14 @@
   .frame{position:absolute;overflow:hidden;background:#000}
   .frame .ph{inset:0}
   .fx{position:absolute;pointer-events:none}
-  .chip{position:absolute;padding:9px 14px;border:1px solid rgba(97,211,196,.45);border-radius:4px;background:rgba(11,15,18,.85);font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.16em;color:var(--ink);white-space:nowrap}
-  .chip i{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--teal);margin-right:10px;vertical-align:middle}
+  .chip{position:absolute;padding:11px 18px;border:1px solid rgba(97,211,196,.45);border-radius:4px;background:rgba(11,15,18,.85);font-family:'JetBrains Mono',monospace;font-size:16px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);white-space:nowrap}
+  .chip i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--teal);margin-right:12px;vertical-align:middle}
   .tag{position:absolute;pointer-events:none}
   .tag .box{position:absolute;border:1.5px solid var(--teal);box-shadow:0 0 0 1px rgba(0,0,0,.4),0 0 18px rgba(97,211,196,.35)}
-  .tag .lab{position:absolute;padding:5px 9px;background:rgba(8,12,14,.92);border-left:2px solid var(--teal);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;color:var(--ink);white-space:nowrap;text-transform:uppercase}
-  .row{position:absolute;left:60px;width:420px;border-top:1px solid var(--line);padding-top:12px;display:flex;justify-content:space-between;align-items:baseline}
-  .row .v{font-family:'JetBrains Mono',monospace;font-size:26px;color:var(--ink);letter-spacing:.05em}
-  .badge{display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border:1px solid rgba(97,211,196,.55);border-radius:4px;background:rgba(11,15,18,.6);font-family:'JetBrains Mono',monospace;font-size:14px;letter-spacing:.16em;color:var(--ink);margin:0 8px}
+  .tag .lab{position:absolute;padding:6px 11px;background:rgba(8,12,14,.92);border-left:2px solid var(--teal);font-family:'JetBrains Mono',monospace;font-size:14px;letter-spacing:.14em;color:var(--ink);white-space:nowrap;text-transform:uppercase}
+  .row{position:absolute;left:60px;width:420px;border-top:1px solid var(--line);padding-top:14px;display:flex;justify-content:space-between;align-items:baseline}
+  .row .v{font-family:'JetBrains Mono',monospace;font-size:30px;color:var(--ink);letter-spacing:.05em}
+  .badge{display:inline-flex;align-items:center;gap:12px;padding:14px 22px;border:1px solid rgba(97,211,196,.55);border-radius:4px;background:rgba(11,15,18,.6);font-family:'JetBrains Mono',monospace;font-size:17px;letter-spacing:.16em;color:var(--ink);margin:0 8px}
   .badge b{color:var(--teal);font-weight:600}
   .skel{position:absolute;background:rgba(255,255,255,.18);border-radius:3px}
   .skel.t{background:var(--teal)}
@@ -60,7 +60,7 @@
     <div class="abs" style="inset:0;background:linear-gradient(90deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,0) 55%)"></div>
     <div class="abs" id="s1alt" style="right:120px;top:170px;text-align:right">
       <div style="font-family:'JetBrains Mono';font-size:46px;color:var(--ink);letter-spacing:.04em;line-height:1" id="s1num">0</div>
-      <div class="mono" style="margin-top:8px;font-size:11px">AGL · Part 107 ceiling</div>
+      <div class="mono" style="margin-top:8px;font-size:13px">AGL · Part 107 ceiling</div>
       <div class="abs" style="right:-24px;top:4px;width:2px;height:60px;background:var(--teal)"></div>
     </div>
     <div class="abs" style="left:120px;top:560px">
@@ -131,25 +131,18 @@
         <div class="rv" id="s5l2"><span class="t">Everyone in the loop.</span></div>
       </div>
     </div>
-    <div class="chip" id="s5c1" style="left:120px;top:600px"><i></i>Developers</div>
-    <div class="chip" id="s5c2" style="left:120px;top:660px"><i></i>General contractors</div>
-    <div class="chip" id="s5c3" style="left:120px;top:720px"><i></i>Architects</div>
-    <div class="chip" id="s5c4" style="left:120px;top:780px"><i></i>Construction managers</div>
-    <div class="abs" id="s5ln1" style="top:618px;height:1px;background:rgba(97,211,196,.6);transform-origin:0 50%"></div>
-    <div class="abs" id="s5ln2" style="top:678px;height:1px;background:rgba(97,211,196,.6);transform-origin:0 50%"></div>
-    <div class="abs" id="s5ln3" style="top:738px;height:1px;background:rgba(97,211,196,.6);transform-origin:0 50%"></div>
-    <div class="abs" id="s5ln4" style="top:798px;height:1px;background:rgba(97,211,196,.6);transform-origin:0 50%"></div>
-    <div class="abs" id="s5spine" style="left:990px;top:618px;width:1px;height:180px;background:rgba(97,211,196,.6);transform-origin:50% 0"></div>
+    <div id="s5chips"></div>
+    <div class="abs" id="s5spine" style="left:990px;top:0;width:1px;height:0;background:rgba(97,211,196,.6);transform-origin:50% 0"></div>
     <div class="abs" id="s5card" style="left:1000px;top:112px;width:800px;height:856px;border:1px solid rgba(97,211,196,.35);border-radius:8px;background:rgba(14,19,23,.92);box-shadow:0 30px 80px rgba(0,0,0,.6)">
-      <div class="abs" style="left:24px;top:22px;display:flex;align-items:center;gap:12px"><img src="assets/logo_mark.png" style="height:24px"><span style="font-weight:700;font-size:17px;letter-spacing:.06em">PROGRESS REPORT</span></div>
-      <div class="mono teal abs" style="right:24px;top:28px;font-size:11px">Visit 12</div>
+      <div class="abs" style="left:24px;top:22px;display:flex;align-items:center;gap:12px"><img src="assets/logo_mark.png" style="height:24px"><span style="font-weight:700;font-size:20px;letter-spacing:.06em">PROGRESS REPORT</span></div>
+      <div class="mono teal abs" style="right:24px;top:27px;font-size:13px">Visit 12</div>
       <div class="abs" style="left:24px;top:64px;width:752px;height:1px;background:var(--line)"></div>
       <!-- image slot: 24,80 → 752x430 -->
-      <div class="chip" id="s5tag" style="left:40px;top:470px;font-size:11px;padding:7px 12px"><i></i>Dated · Geotagged · 400 ft</div>
+      <div class="chip" id="s5tag" style="left:40px;top:466px;font-size:13px;padding:8px 14px"><i></i>Dated · Geotagged · 400 ft</div>
       <div class="abs" id="s5thumbs" style="left:24px;top:532px;width:752px;height:110px;display:flex;gap:10px"></div>
-      <div class="row" style="left:24px;width:752px;top:672px"><span class="mono">Captures</span><span class="mono white" style="font-size:12px">Photos + 4K video</span></div>
-      <div class="row" style="left:24px;width:752px;top:730px"><span class="mono">Stage</span><span class="mono white" style="font-size:12px">Complete</span></div>
-      <div class="row" style="left:24px;width:752px;top:788px"><span class="mono">Shared with</span><span class="mono white" style="font-size:12px">Project team <b style="color:var(--teal)">✓</b></span></div>
+      <div class="row" style="left:24px;width:752px;top:672px"><span class="mono">Captures</span><span class="mono white" style="font-size:14px">Photos + 4K video</span></div>
+      <div class="row" style="left:24px;width:752px;top:730px"><span class="mono">Stage</span><span class="mono white" style="font-size:14px">Complete</span></div>
+      <div class="row" style="left:24px;width:752px;top:788px"><span class="mono">Shared with</span><span class="mono white" style="font-size:14px">Project team <b style="color:var(--teal)">✓</b></span></div>
     </div>
   </div>
   <div class="frame" id="morph" style="display:none;left:0;top:0;width:1920px;height:1080px;z-index:3"><div class="ph" id="morphph" style="background-image:url(assets/office.jpg)"></div></div>
@@ -173,12 +166,12 @@
         <defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#61D3C4" stop-opacity=".25"/><stop offset="1" stop-color="#61D3C4" stop-opacity="0"/></linearGradient></defs>
         <circle id="s6ring" cx="150" cy="545" r="8" fill="none" stroke="var(--teal)" stroke-width="2"/>
         <circle id="s6dot" cx="150" cy="545" r="6" fill="var(--teal)"/>
-        <g id="s6ann" font-family="JetBrains Mono" font-size="11" letter-spacing="1.6" fill="#f3f5f6">
+        <g id="s6ann" font-family="JetBrains Mono" font-size="13" letter-spacing="1.8" fill="#f3f5f6">
           <line x1="150" y1="535" x2="150" y2="470" stroke="var(--teal)" stroke-width="1"/>
           <text x="162" y="470">SPOTTED FROM THE AIR</text>
           <text x="162" y="490" fill="#61D3C4">EARLY FIX · LOW COST</text>
         </g>
-        <g font-family="JetBrains Mono" font-size="10" letter-spacing="1.8" fill="#8a969c">
+        <g font-family="JetBrains Mono" font-size="12" letter-spacing="2" fill="#8a969c">
           <text x="70" y="590">SITE WORK</text><text x="220" y="590">STRUCTURE</text><text x="370" y="590">ENVELOPE</text><text x="520" y="590">FINISHES</text><text x="660" y="590">CLOSEOUT</text>
           <text x="740" y="620" text-anchor="end">PROJECT TIMELINE</text>
           <text transform="translate(40 300) rotate(-90)" text-anchor="middle">COST TO FIX</text>
@@ -290,9 +283,9 @@
         <div class="rv" id="s11l2"><span>for every <span class="t">property.</span></span></div>
       </div>
     </div>
-    <div class="abs" id="s11lab1" style="left:120px;top:880px"><div style="font-weight:700;font-size:30px;letter-spacing:.12em">RESIDENTIAL</div><div class="mono teal" style="margin-top:10px;font-size:12px">Homes · Apartment complexes</div></div>
-    <div class="abs" id="s11lab2" style="left:760px;top:880px"><div style="font-weight:700;font-size:30px;letter-spacing:.12em">COMMERCIAL</div><div class="mono teal" style="margin-top:10px;font-size:12px">Retail · Business properties</div></div>
-    <div class="abs" id="s11lab3" style="left:1400px;top:880px"><div style="font-weight:700;font-size:30px;letter-spacing:.12em">INDUSTRIAL</div><div class="mono teal" style="margin-top:10px;font-size:12px">Warehouses · Logistics</div></div>
+    <div class="abs" id="s11lab1" style="left:120px;top:880px"><div style="font-weight:700;font-size:34px;letter-spacing:.12em">RESIDENTIAL</div><div class="mono teal" style="margin-top:10px;font-size:15px">Homes · Apartment complexes</div></div>
+    <div class="abs" id="s11lab2" style="left:760px;top:880px"><div style="font-weight:700;font-size:34px;letter-spacing:.12em">COMMERCIAL</div><div class="mono teal" style="margin-top:10px;font-size:15px">Retail · Business properties</div></div>
+    <div class="abs" id="s11lab3" style="left:1400px;top:880px"><div style="font-weight:700;font-size:34px;letter-spacing:.12em">INDUSTRIAL</div><div class="mono teal" style="margin-top:10px;font-size:15px">Warehouses · Logistics</div></div>
   </div>
 
   <!-- S12 golf -->
@@ -342,10 +335,10 @@
     <div class="abs" id="s15glow" style="left:960px;top:430px;width:900px;height:900px;margin:-450px 0 0 -450px;border-radius:50%;background:radial-gradient(circle,rgba(97,211,196,.22),rgba(97,211,196,0) 60%)"></div>
     <img id="s15logo" src="assets/logo_full.png" class="abs" style="left:720px;top:190px;width:480px;transform-origin:50% 50%">
     <div class="abs" id="s15line" style="left:780px;top:626px;width:360px;height:1px;background:var(--teal);transform-origin:50% 50%"></div>
-    <div class="abs" style="left:0;top:650px;width:1920px;text-align:center">
-      <div class="rv" id="s15tag" style="font-weight:600;font-size:44px;letter-spacing:-.01em"><span>Let's pivot your project.</span></div>
-      <div class="mono teal rv" id="s15f1" style="margin-top:38px;font-size:12px"><span>Construction progress · Inspections · Construction marketing · Aerial photo &amp; video</span></div>
-      <div class="mono rv" id="s15f2" style="margin-top:14px;font-size:11px"><span>Based in New Jersey · FAA Part 107 · OSHA · ICS 100 / 200 / 700</span></div>
+    <div class="abs" style="left:0;top:646px;width:1920px;text-align:center">
+      <div class="rv" id="s15tag" style="font-weight:600;font-size:60px;letter-spacing:-.015em"><span>Let's pivot your project.</span></div>
+      <div class="mono teal rv" id="s15f1" style="margin-top:40px;font-size:17px"><span>Construction progress · Inspections · Construction marketing · Aerial photo &amp; video</span></div>
+      <div class="mono rv" id="s15f2" style="margin-top:16px;font-size:16px;color:rgba(255,255,255,.7)"><span>Based in New Jersey · FAA Part 107 · OSHA · ICS 100 / 200 / 700</span></div>
     </div>
   </div>
 
@@ -353,8 +346,8 @@
   <div class="abs" id="hud" style="inset:0;pointer-events:none;z-index:10">
     <div class="corner tl" style="left:40px;top:40px"></div><div class="corner tr" style="left:1850px;top:40px"></div>
     <div class="corner bl" style="left:40px;top:1010px"></div><div class="corner br" style="left:1850px;top:1010px"></div>
-    <div class="abs" style="left:88px;top:44px;display:flex;align-items:center;gap:12px"><img src="assets/logo_mark.png" style="height:22px;opacity:.9"><span class="mono white" id="hudsec" style="font-size:11px;color:rgba(255,255,255,.75)">Aerial documentation</span></div>
-    <div class="mono abs" id="hudtc" style="right:88px;top:46px;font-size:11px;color:rgba(255,255,255,.75)">TC 00:00:00:00</div>
+    <div class="abs" style="left:88px;top:44px;display:flex;align-items:center;gap:12px"><img src="assets/logo_mark.png" style="height:22px;opacity:.9"><span class="mono white" id="hudsec" style="font-size:13px;color:rgba(255,255,255,.75)">Aerial documentation</span></div>
+    <div class="mono abs" id="hudtc" style="right:88px;top:45px;font-size:13px;color:rgba(255,255,255,.75)">TC 00:00:00:00</div>
   </div>
   <div class="fx" id="sweep" style="left:0;top:0;width:6px;height:1080px;background:var(--teal);box-shadow:0 0 40px 10px rgba(97,211,196,.6);opacity:0;z-index:11"></div>
   <div class="vig"></div>
@@ -378,8 +371,8 @@ const pad=(n,w=2)=>String(n).padStart(w,'0');
 // ---------- build dynamic bits ----------
 const ASSETS=['golf','cap_slab','cap_steel','cap_plaza','cap_house','cap_foundation','opening_tower','stage_sitework','stage_foundations','stage_framing','stage_roof','townhouses','office','res_tower_dusk','piccolos','roof_hvac','tiltup_warehouse','waterfront_sunset','industrial_warehouse','facade_closeup'];
 (function buildMosaic(){const m=$('mosaic');const inner=document.createElement('div');inner.id='mosaicInner';inner.style.cssText='position:absolute;left:-400px;top:-300px;width:2800px;height:1700px;transform:rotate(-7deg);display:grid;grid-template-columns:repeat(7,1fr);gap:18px;opacity:.11;filter:grayscale(.6) brightness(.9)';for(let i=0;i<35;i++){const d=document.createElement('div');d.style.cssText=`background:url(assets/${ASSETS[i%ASSETS.length]}.jpg) center/cover;border-radius:4px`;inner.appendChild(d)}m.appendChild(inner);const sh=document.createElement('div');sh.style.cssText='position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(11,15,18,.2),rgba(11,15,18,.95) 75%)';m.appendChild(sh)})();
-(function buildS3(){document.querySelectorAll('.s3p').forEach(p=>{p.style.cssText+=';top:0;width:428px;height:1080px;overflow:hidden';p.firstElementChild.style.cssText+=';left:-220px;right:-220px;transform:skewX(8deg)'});const L=['01 Site work','02 Foundations','03 Framing','04 Roof structure','05 Complete'];const c=$('s3labels');L.forEach((s,i)=>{const d=document.createElement('div');d.className='mono white';d.style.cssText=`position:absolute;left:${120+i*336}px;top:0;font-size:12px`;d.innerHTML=`<span style="color:var(--teal);margin-right:10px">${s.slice(0,2)}</span>${s.slice(3)}`;c.appendChild(d)})})();
-(function buildS5(){const th=[['stage_sitework','01 Site work'],['stage_foundations','02 Foundations'],['stage_framing','03 Framing'],['stage_roof','04 Roof']];const c=$('s5thumbs');th.forEach(([a,l])=>{const d=document.createElement('div');d.style.cssText=`flex:1;position:relative;border-radius:4px;overflow:hidden;background:url(assets/${a}.jpg) center/cover`;d.innerHTML=`<div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.75))"></div><div class="mono white" style="position:absolute;left:10px;bottom:8px;font-size:9px;letter-spacing:.14em">${l}</div>`;c.appendChild(d)})})();
+(function buildS3(){document.querySelectorAll('.s3p').forEach(p=>{p.style.cssText+=';top:0;width:428px;height:1080px;overflow:hidden';p.firstElementChild.style.cssText+=';left:-220px;right:-220px;transform:skewX(8deg)'});const L=['01 Site work','02 Foundations','03 Framing','04 Roof structure','05 Complete'];const c=$('s3labels');L.forEach((s,i)=>{const d=document.createElement('div');d.className='mono white';d.style.cssText=`position:absolute;left:${120+i*336}px;top:0;font-size:15px`;d.innerHTML=`<span style="color:var(--teal);margin-right:10px">${s.slice(0,2)}</span>${s.slice(3)}`;c.appendChild(d)})})();
+(function buildS5(){const CH=['Developers','General contractors','Subcontractors','Architects','Civil engineers','Construction managers','Owners · Investors'];const cc=$('s5chips');CH.forEach((n,i)=>{const d=document.createElement('div');d.className='chip';d.id='s5c'+(i+1);d.style.cssText=`left:120px;top:${452+i*58}px`;d.innerHTML='<i></i>'+n;cc.appendChild(d);const l=document.createElement('div');l.className='abs';l.id='s5ln'+(i+1);l.style.cssText=`top:${452+i*58+22}px;height:1px;background:rgba(97,211,196,.6);transform-origin:0 50%`;cc.appendChild(l)});const th=[['stage_sitework','01 Site work'],['stage_foundations','02 Foundations'],['stage_framing','03 Framing'],['stage_roof','04 Roof']];const c=$('s5thumbs');th.forEach(([a,l])=>{const d=document.createElement('div');d.style.cssText=`flex:1;position:relative;border-radius:4px;overflow:hidden;background:url(assets/${a}.jpg) center/cover`;d.innerHTML=`<div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.75))"></div><div class="mono white" style="position:absolute;left:10px;bottom:8px;font-size:11px;letter-spacing:.14em">${l}</div>`;c.appendChild(d)})})();
 (function buildS11(){document.querySelectorAll('.s11p').forEach(p=>{p.style.cssText+=';top:0;width:733px;height:1080px;overflow:hidden';p.firstElementChild.style.cssText+=';left:-260px;right:-260px;transform:skewX(10deg)'})})();
 function mkTag(parent,x,y,w,h,label,labelPos){const t=document.createElement('div');t.className='tag';t.style.cssText=`left:${x}px;top:${y}px;width:${w}px;height:${h}px`;const b=document.createElement('div');b.className='box';b.style.cssText='inset:0';t.appendChild(b);const l=document.createElement('div');l.className='lab';l.textContent=label;l.style.cssText=labelPos==='above'?`left:0;top:-32px`:labelPos==='right'?`left:${w+12}px;top:-2px`:labelPos==='left'?`right:${w+12}px;top:-2px`:`left:0;top:${h+10}px`;t.appendChild(l);parent.appendChild(t);return t}
 const roofTags=[mkTag($('s8tags'),150,195,170,170,'A1  RTU · Condenser','right'),mkTag($('s8tags'),150,385,170,160,'A2  RTU · Condenser','right'),mkTag($('s8tags'),495,150,70,70,'A3  Exhaust vent','above'),mkTag($('s8tags'),478,360,52,52,'A4  Roof drain','right')];
@@ -423,7 +416,7 @@ function seek(t){
       const pz=R(t,13.3,14.0,E.outExpo);$('morphph').style.transform=`scale(${lerp(1.35,1.0,pz)})`;$('morphph').style.filter=`blur(${(1-pz)*6}px)`;wipe(mm,t,i-.05,.45);
       if(t>=13.9){const s5=$('s5');s5.style.opacity=1-R(t,o-.3,o,E.in);const cp=R(t,14.1,14.8,E.outExpo);$('s5card').style.opacity=cp;$('s5card').style.transform=`translateY(${(1-cp)*30}px)`;$('s5tag').style.opacity=R(t,14.7,15);$('s5thumbs').style.opacity=R(t,14.9,15.3);
         reveal('s5k',t,14.4);reveal('s5l1',t,14.6);reveal('s5l2',t,15.2);
-        [1,2,3,4].forEach(n=>{const t0=15.7+(n-1)*.4;pop($('s5c'+n),t,t0);const ln=$('s5ln'+n);const left=[266,400,268,436][n-1];ln.style.left=left+'px';ln.style.width=(990-left)+'px';ln.style.transform=`scaleX(${R(t,t0+.15,t0+.6,E.inOut)})`});$('s5spine').style.transform=`scaleY(${R(t,16.0,17.4,E.inOut)})`}}}
+        [1,2,3,4,5,6,7].forEach(n=>{const t0=15.45+(n-1)*.27;const c=$('s5c'+n);pop(c,t,t0);const ln=$('s5ln'+n);const left=120+c.offsetWidth+14;ln.style.left=left+'px';ln.style.width=(990-left)+'px';ln.style.transform=`scaleX(${R(t,t0+.12,t0+.5,E.inOut)})`});const sp=$('s5spine');sp.style.top='474px';sp.style.height=(6*58)+'px';sp.style.transform=`scaleY(${R(t,15.7,17.3,E.inOut)})`}}}
   // S6 chart, S7 save
   {const i=18.1,o=22.4,on=t>=i&&t<o;show($('s6'),on);if(on){$('s6').style.opacity=R(t,i,i+.3)*(1-R(t,o-.3,o,E.in));const sv=t<20.4?1:1-R(t,20.4,20.8);$('s6left').style.opacity=sv;$('s6left').style.transform=`translateX(${-(1-sv)*60}px)`;$('s6chart').style.opacity=t<20.4?R(t,18.2,18.6):lerp(1,.18,R(t,20.4,20.9));$('s6chart').style.transform=`scale(${t<20.4?1:lerp(1,1.08,R(t,20.4,22.4,E.lin))})`;
     reveal('s6k',t,18.3);reveal('s6l1',t,18.45);reveal('s6l2',t,19.05);reveal('s6sub',t,19.5);const cp=R(t,18.5,19.9,E.inOut);$('s6curve').style.strokeDashoffset=s6len*(1-cp);$('s6fill').style.opacity=R(t,19.6,20.2)*.9;const dp=R(t,18.9,19.3,E.outBack);$('s6dot').setAttribute('r',6*dp);const rp=((t-18.9)%1.1)/1.1;$('s6ring').setAttribute('r',8+rp*22);$('s6ring').style.opacity=t>18.9?(1-rp)*.9:0;$('s6ann').style.opacity=R(t,19.3,19.7);
