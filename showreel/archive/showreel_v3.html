@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SkyPivot Showreel</title>
+<style>
+  :root{--teal:#61D3C4;--teal2:#2fb8a6;--warn:#ff7a59;--bg:#0b0f12;--ink:#f3f5f6;--mute:#8a969c;--line:rgba(255,255,255,.14)}
+  html,body{margin:0;background:#000;overflow:hidden}
+  #stage{position:relative;overflow:hidden;background:var(--bg);font-family:'Inter Display','Inter',system-ui,sans-serif;color:var(--ink);transform-origin:0 0}
+  #stage *{box-sizing:border-box}
+  #world{position:absolute;inset:0;transform-origin:50% 50%}
+  .abs{position:absolute}
+  .scene{position:absolute;inset:0;display:none}
+  .ph{position:absolute;inset:0;background-size:cover;background-position:center;will-change:transform}
+  .bgblur{position:absolute;inset:-80px;background-size:cover;background-position:center;filter:blur(34px) brightness(.38) saturate(1.15)}
+  .fb{position:absolute;overflow:hidden;background:#000}
+  .mono{font-family:'JetBrains Mono',monospace;font-weight:500;letter-spacing:.18em;text-transform:uppercase;font-size:16px;color:var(--mute)}
+  .mono.teal{color:var(--teal)} .mono.white{color:var(--ink)}
+  .kick{font-family:'JetBrains Mono',monospace;font-weight:500;letter-spacing:.22em;text-transform:uppercase;font-size:17px;color:var(--teal);white-space:nowrap}
+  .kick .cur{display:inline-block;width:.6em;height:1em;background:var(--teal);vertical-align:-.15em;margin-left:.2em}
+  .h{font-weight:700;font-size:84px;line-height:1.02;letter-spacing:-.03em;color:var(--ink)}
+  .h .t{color:var(--teal)}
+  .rv{overflow:hidden;display:block}
+  .rv>span{display:block}
+  .rv .w{display:inline-block;will-change:transform,filter}
+  .big{font-weight:800;letter-spacing:-.04em;line-height:.92;color:var(--ink)}
+  .num{font-family:'JetBrains Mono',monospace;font-weight:600;letter-spacing:-.02em;color:var(--ink);font-variant-numeric:tabular-nums}
+  .corner{position:absolute;width:30px;height:30px;border:2px solid rgba(255,255,255,.55)}
+  .corner.tl{border-right:0;border-bottom:0}.corner.tr{border-left:0;border-bottom:0}.corner.bl{border-right:0;border-top:0}.corner.br{border-left:0;border-top:0}
+  .fx{position:absolute;pointer-events:none}
+  .chip{position:absolute;padding:12px 18px;border:1px solid rgba(97,211,196,.5);border-radius:4px;background:rgba(11,15,18,.9);font-family:'JetBrains Mono',monospace;font-size:15px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);white-space:nowrap;transform-origin:50% 50%}
+  .chip i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--teal);margin-right:12px;vertical-align:middle;box-shadow:0 0 10px var(--teal)}
+  .chip b{color:var(--teal);margin-left:10px;font-weight:600}
+  .tag{position:absolute;pointer-events:none}
+  .tag .box{position:absolute;inset:0;border:1.5px solid var(--teal);box-shadow:0 0 0 1px rgba(0,0,0,.4),0 0 18px rgba(97,211,196,.35);transform-origin:50% 50%}
+  .tag .box:before,.tag .box:after,.tag .box i:before,.tag .box i:after{content:'';position:absolute;width:12px;height:12px;border:2px solid var(--teal)}
+  .tag .box:before{left:-3px;top:-3px;border-right:0;border-bottom:0}.tag .box:after{right:-3px;top:-3px;border-left:0;border-bottom:0}
+  .tag .box i:before{left:-3px;bottom:-3px;border-right:0;border-top:0}.tag .box i:after{right:-3px;bottom:-3px;border-left:0;border-top:0}
+  .tag .lab{position:absolute;padding:6px 11px;background:rgba(8,12,14,.92);border-left:2px solid var(--teal);font-family:'JetBrains Mono',monospace;font-size:14px;letter-spacing:.14em;color:var(--ink);white-space:nowrap;text-transform:uppercase}
+  .tele{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.65);white-space:nowrap}
+  .tele b{color:var(--teal);font-weight:500}
+  .p{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--teal);box-shadow:0 0 8px rgba(97,211,196,.9)}
+  .chk{display:flex;align-items:center;gap:18px;font-family:'JetBrains Mono',monospace;font-size:22px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);margin-bottom:22px;white-space:nowrap}
+  .chk .bx{width:30px;height:30px;border:2px solid rgba(255,255,255,.5);position:relative;flex:none}
+  .chk .bx svg{position:absolute;left:3px;top:2px}
+  .chk .bx svg path{stroke:var(--teal);stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:30;stroke-dashoffset:30}
+  .chk.on .bx{border-color:var(--teal);box-shadow:0 0 14px rgba(97,211,196,.6)}
+  .slamtxt{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#0b0f12;font-weight:800;letter-spacing:-.04em;line-height:.95}
+  .slamtxt small{display:block;font-family:'JetBrains Mono',monospace;font-weight:600;font-size:18px;letter-spacing:.3em;margin-top:28px;opacity:.75}
+  .card{position:absolute;border:1px solid rgba(97,211,196,.4);border-radius:8px;background:rgba(14,19,23,.95);box-shadow:0 30px 80px rgba(0,0,0,.7);overflow:hidden}
+  .tile{position:absolute;background-size:cover;will-change:transform,filter;transform-style:preserve-3d;backface-visibility:hidden}
+  .col{position:absolute;display:flex;flex-direction:column;align-items:flex-start}
+  .col .ic{width:64px;height:64px;margin-bottom:22px}
+  .col .ic path,.col .ic circle,.col .ic polyline{fill:none;stroke:var(--teal);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+  .col .ttl{font-weight:800;font-size:40px;letter-spacing:-.02em;line-height:1}
+  .col .sub{font-family:'JetBrains Mono',monospace;font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin-top:14px}
+  .col .ln{height:3px;background:var(--teal);margin-top:22px;transform-origin:0 50%;width:80px}
+  .skel{position:absolute;background:rgba(255,255,255,.18);border-radius:3px}
+  .skel.t{background:var(--teal)}
+  .dev{position:absolute;background:#141b20;border:1px solid rgba(255,255,255,.14);overflow:hidden;box-shadow:0 40px 90px rgba(0,0,0,.7);transform-origin:50% 50%}
+  .marq{position:absolute;white-space:nowrap;font-family:'JetBrains Mono',monospace;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--ink)}
+  .marq b{color:var(--teal);font-weight:600;margin:0 .5em}
+  .divider{position:absolute;background:rgba(255,255,255,.25)}
+</style>
+</head>
+<body>
+<div id="stage">
+<div id="world">
+  <div class="fx" id="particles" style="inset:0"></div>
+  <div class="scene" id="mosaic"></div>
+
+  <!-- C0 cold open -->
+  <div class="scene" id="c0">
+    <div class="bgblur v-only" id="c0blur"></div>
+    <div class="fb" data-h="left:0;top:0;width:1920px;height:1080px" data-v="left:0;top:420px;width:1080px;height:810px"><div class="ph" id="c0ph"></div></div>
+    <div class="abs mono white" data-h="left:120px;top:90px" data-v="left:80px;top:300px" style="display:flex;align-items:center;gap:14px"><span id="c0rec" style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#ff3b3b"></span>SkyPivot · Aerial documentation</div>
+    <div class="abs num" id="c0n" data-h="right:120px;bottom:90px;font-size:120px" data-v="right:80px;top:1300px;font-size:110px">01</div>
+    <div class="abs mono" data-h="right:120px;bottom:70px" data-v="right:80px;top:1440px" style="font-size:12px">Frame</div>
+  </div>
+
+  <!-- C1 logo + slam -->
+  <div class="scene" id="c1">
+    <div class="fx" id="c1parts" style="inset:0"></div>
+    <div class="abs" id="c1glow" data-h="left:960px;top:470px" data-v="left:540px;top:900px" style="width:900px;height:900px;margin:-450px 0 0 -450px;border-radius:50%;background:radial-gradient(circle,rgba(97,211,196,.3),rgba(97,211,196,0) 60%)"></div>
+    <img id="c1mark" src="assets/logo_mark.png" class="abs" data-h="left:800px;top:280px;width:320px" data-v="left:390px;top:680px;width:300px" style="transform-origin:50% 50%">
+    <div class="abs" id="c1word" data-h="left:0;top:560px;width:1920px;font-size:96px" data-v="left:0;top:960px;width:1080px;font-size:88px" style="text-align:center;font-weight:800;letter-spacing:-.03em"><span>S</span><span>k</span><span>y</span><span>P</span><span>i</span><span>v</span><span>o</span><span>t</span></div>
+  </div>
+
+  <!-- C2 preflight + takeoff -->
+  <div class="scene" id="c2">
+    <div class="bgblur v-only" style="background-image:url(assets/opening_tower.jpg)"></div>
+    <div class="fb" data-h="left:0;top:0;width:1920px;height:1080px" data-v="left:0;top:420px;width:1080px;height:810px"><div class="ph" id="c2ph" style="background-image:url(assets/opening_tower.jpg)"></div>
+      <div class="fx" id="c2scan" style="inset:0;background-image:linear-gradient(rgba(97,211,196,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(97,211,196,.14) 1px,transparent 1px);background-size:80px 80px"></div></div>
+    <div class="abs h-only" style="inset:0;background:linear-gradient(180deg,rgba(0,0,0,.4),rgba(0,0,0,0) 35%,rgba(0,0,0,0) 55%,rgba(0,0,0,.85))"></div>
+    <div class="abs h-only" style="inset:0;background:linear-gradient(90deg,rgba(0,0,0,.6),rgba(0,0,0,0) 55%)"></div>
+    <div class="abs" id="c2list" data-h="left:120px;top:300px" data-v="left:80px;top:220px">
+      <div class="kick" id="c2k">Pre-flight check</div>
+      <div style="height:30px"></div>
+      <div class="chk" id="chk1"><div class="bx"><svg width="22" height="22" viewBox="0 0 22 22"><path d="M3 11 L9 17 L19 5"/></svg></div>GPS lock · 14 satellites</div>
+      <div class="chk" id="chk2"><div class="bx"><svg width="22" height="22" viewBox="0 0 22 22"><path d="M3 11 L9 17 L19 5"/></svg></div>FAA Part 107 certified</div>
+      <div class="chk" id="chk3"><div class="bx"><svg width="22" height="22" viewBox="0 0 22 22"><path d="M3 11 L9 17 L19 5"/></svg></div>OSHA certified</div>
+      <div class="chk" id="chk4"><div class="bx"><svg width="22" height="22" viewBox="0 0 22 22"><path d="M3 11 L9 17 L19 5"/></svg></div>ICS 100 · 200 · 700</div>
+      <div class="mono teal" id="c2clear" style="margin-top:34px;font-size:26px;letter-spacing:.3em;font-weight:600">▶ Cleared for takeoff</div>
+    </div>
+    <div class="abs" id="c2alt" data-h="right:120px;top:150px" data-v="right:80px;top:230px" style="text-align:right">
+      <div class="num" id="c2num" style="font-size:88px;line-height:1">0</div>
+      <div class="mono" style="margin-top:6px;font-size:13px">FT AGL · climbing</div>
+      <div class="abs" id="c2tape" style="right:-50px;top:-20px;width:26px;height:170px;overflow:hidden;opacity:.7"><div id="c2tapein" style="position:absolute;left:0;width:26px;height:900px;background:repeating-linear-gradient(180deg,rgba(255,255,255,.8) 0 1px,transparent 1px 12px)"></div></div>
+    </div>
+    <div class="abs" id="c2head" data-h="left:120px;top:600px" data-v="left:80px;top:1290px">
+      <div class="kick" id="c2k2">Construction progress · Inspections · Marketing</div>
+      <div class="h" style="margin-top:22px" data-h="font-size:96px" data-v="font-size:90px">
+        <div class="rv" id="c2l1"><span>Construction</span></div>
+        <div class="rv" id="c2l2"><span>moves fast.</span></div>
+        <div class="rv" id="c2l3"><span class="t">Stay ahead of it.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- C3 visit cuts -->
+  <div class="scene" id="c3">
+    <div class="bgblur v-only" id="c3blur"></div>
+    <div class="fb" id="c3fb" data-h="left:0;top:0;width:1920px;height:1080px" data-v="left:90px;top:300px;width:900px;height:900px"><div class="ph" id="c3ph"></div>
+      <div class="fx" id="c3flash" style="inset:0;background:#fff;opacity:0"></div>
+      <div class="fx" style="left:50%;top:50%;width:180px;height:180px;margin:-90px 0 0 -90px;border:1px solid rgba(255,255,255,.5);border-radius:50%"></div>
+      <div class="fx" id="c3ret" style="left:50%;top:50%;width:110px;height:110px;margin:-55px 0 0 -55px;border:1.5px dashed rgba(97,211,196,.9);border-radius:50%"></div>
+      <div class="fx" style="left:50%;top:50%;width:2px;height:40px;margin:-20px 0 0 -1px;background:rgba(255,255,255,.7)"></div>
+      <div class="fx" style="left:50%;top:50%;width:40px;height:2px;margin:-1px 0 0 -20px;background:rgba(255,255,255,.7)"></div>
+    </div>
+    <div class="abs h-only" style="inset:0;background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,0) 30%,rgba(0,0,0,0) 55%,rgba(0,0,0,.9))"></div>
+    <div class="abs" data-h="left:120px;top:90px" data-v="left:80px;top:150px">
+      <div class="kick" id="c3k">01 / Construction progress monitoring</div>
+    </div>
+    <div class="abs" id="c3visit" data-h="right:120px;top:84px" data-v="right:80px;top:140px" style="text-align:right">
+      <div class="num" id="c3vn" style="font-size:64px;line-height:1">VISIT 01</div>
+      <div class="mono teal" id="c3wk" style="margin-top:6px;font-size:14px">Week 02</div>
+    </div>
+    <div class="abs" data-h="left:120px;top:700px" data-v="left:80px;top:1290px">
+      <div class="h" data-h="font-size:84px" data-v="font-size:80px">
+        <div class="rv" id="c3l1"><span>Same altitude.</span></div>
+        <div class="rv" id="c3l2"><span>Same angle. <span class="t">Every visit.</span></span></div>
+      </div>
+      <div class="mono rv" id="c3sub" style="margin-top:26px"><span>Repeatable flight paths · Consistent data · No guesswork</span></div>
+    </div>
+  </div>
+
+  <!-- C4 stage carousel -->
+  <div class="scene" id="c4">
+    <div class="abs" data-h="left:120px;top:110px" data-v="left:80px;top:150px">
+      <div class="kick" id="c4k">Progress over time</div>
+      <div class="h" style="margin-top:20px" data-h="font-size:80px" data-v="font-size:76px">
+        <div class="rv" id="c4l1"><span>From groundbreaking</span></div>
+        <div class="rv" id="c4l2"><span class="t">to handover.</span></div>
+      </div>
+    </div>
+    <div class="abs num" id="c4pct" data-h="right:120px;top:120px;font-size:150px" data-v="right:80px;top:1560px;font-size:150px" style="line-height:1;text-align:right">0%</div>
+    <div class="abs mono" data-h="right:120px;top:284px" data-v="right:80px;top:1720px" style="font-size:13px;text-align:right">Project complete</div>
+    <div class="abs" id="c4row" data-h="left:0;top:430px;height:520px" data-v="left:0;top:560px;height:860px" style="width:100%"></div>
+    <div class="abs" id="c4bar" data-h="left:120px;top:990px;width:1680px" data-v="left:80px;top:1480px;width:920px" style="height:3px;background:rgba(255,255,255,.15)"><div id="c4barf" style="position:absolute;left:0;top:0;height:3px;width:0;background:var(--teal);box-shadow:0 0 12px var(--teal)"></div></div>
+  </div>
+
+  <!-- C5 report hub -->
+  <div class="scene" id="c5">
+    <div class="abs" data-h="left:120px;top:110px" data-v="left:80px;top:150px">
+      <div class="kick" id="c5k">Progress reports · Delivered</div>
+      <div class="h" style="margin-top:20px" data-h="font-size:76px" data-v="font-size:72px">
+        <div class="rv" id="c5l1"><span>Dated reports.</span></div>
+        <div class="rv" id="c5l2"><span class="t">Everyone in the loop.</span></div>
+      </div>
+    </div>
+    <svg id="c5svg" class="fx" style="left:0;top:0" width="100%" height="100%"></svg>
+    <div id="c5chips"></div>
+    <div class="card" id="c5card" data-h="left:1000px;top:450px;width:520px;height:400px" data-v="left:300px;top:850px;width:480px;height:380px">
+      <div class="abs" style="left:20px;top:18px;display:flex;align-items:center;gap:10px"><img src="assets/logo_mark.png" style="height:20px"><span style="font-weight:700;font-size:16px;letter-spacing:.06em">PROGRESS REPORT</span></div>
+      <div class="mono teal abs" style="right:20px;top:22px;font-size:11px">Visit 12</div>
+      <div class="abs" style="left:20px;top:54px;right:20px;bottom:70px;border-radius:4px;background:url(assets/office.jpg) center/cover"></div>
+      <div class="abs tele" style="left:20px;bottom:38px;color:#fff">Dated · Geotagged · 400 ft · Photos + 4K</div>
+      <div class="abs tele" style="left:20px;bottom:16px"><b>SHARED</b> with project team</div>
+      <div class="abs" id="c5sent" style="right:16px;bottom:14px;padding:6px 10px;border:2px solid var(--teal);border-radius:3px;color:var(--teal);font-family:'JetBrains Mono';font-size:13px;letter-spacing:.2em;transform:rotate(-8deg);transform-origin:50% 50%">SENT ✓</div>
+    </div>
+  </div>
+
+  <!-- C6 cost race -->
+  <div class="scene" id="c6">
+    <div class="abs" id="c6L" data-h="left:0;top:0;width:960px;height:1080px" data-v="left:0;top:0;width:1080px;height:960px" style="overflow:hidden">
+      <div class="ph" style="background-image:url(assets/stage_foundations.jpg);filter:brightness(.28) saturate(.6)"></div>
+      <div class="abs" style="inset:0;background:linear-gradient(180deg,rgba(11,15,18,.2),rgba(11,15,18,.9))"></div>
+      <div class="abs" data-h="left:120px;top:150px" data-v="left:80px;top:130px">
+        <div class="kick" id="c6kL">Spotted from the air</div>
+        <div class="num" style="font-size:40px;margin-top:16px;color:var(--teal)">WEEK 06</div>
+      </div>
+      <div class="abs" data-h="left:120px;top:560px" data-v="left:80px;top:560px">
+        <div class="num" id="c6nL" style="font-size:170px;line-height:1;color:var(--teal)">1×</div>
+        <div class="mono" style="margin-top:10px">Cost to fix</div>
+        <div class="abs" id="c6bL" data-h="left:0;top:260px;width:720px" data-v="left:0;top:250px;width:920px" style="height:18px;background:rgba(255,255,255,.08)"><div style="position:absolute;left:0;top:0;height:18px;width:10%;background:var(--teal);box-shadow:0 0 16px var(--teal)"></div></div>
+      </div>
+    </div>
+    <div class="abs" id="c6R" data-h="left:960px;top:0;width:960px;height:1080px" data-v="left:0;top:960px;width:1080px;height:960px" style="overflow:hidden">
+      <div class="ph" style="background-image:url(assets/stage_roof.jpg);filter:brightness(.28) saturate(.6)"></div>
+      <div class="abs" style="inset:0;background:linear-gradient(180deg,rgba(11,15,18,.2),rgba(11,15,18,.9))"></div>
+      <div class="abs" data-h="left:120px;top:150px" data-v="left:80px;top:130px">
+        <div class="kick" id="c6kR" style="color:var(--warn)">Found on site</div>
+        <div class="num" style="font-size:40px;margin-top:16px;color:var(--warn)">WEEK 30</div>
+      </div>
+      <div class="abs" data-h="left:120px;top:560px" data-v="left:80px;top:560px">
+        <div class="num" id="c6nR" style="font-size:170px;line-height:1;color:var(--warn)">1×</div>
+        <div class="mono" style="margin-top:10px">Cost to fix · Rework · Delays</div>
+        <div class="abs" id="c6bR" data-h="left:0;top:260px;width:720px" data-v="left:0;top:250px;width:920px" style="height:18px;background:rgba(255,255,255,.08)"><div style="position:absolute;left:0;top:0;height:18px;width:0;background:var(--warn);box-shadow:0 0 16px var(--warn)"></div></div>
+      </div>
+    </div>
+    <div class="divider" id="c6div" data-h="left:959px;top:0;width:2px;height:1080px;transform-origin:50% 0" data-v="left:0;top:959px;width:1080px;height:2px;transform-origin:0 50%"></div>
+    <div class="abs" id="c6vs" data-h="left:960px;top:540px" data-v="left:540px;top:960px" style="width:90px;height:90px;margin:-45px 0 0 -45px;border-radius:50%;background:var(--bg);border:2px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:26px;letter-spacing:.05em">VS</div>
+  </div>
+
+  <!-- C7 roof grid -->
+  <div class="scene" id="c7">
+    <div class="bgblur v-only" style="background-image:url(assets/roof_hvac.jpg)"></div>
+    <div class="fb" id="c7fb" data-h="left:0;top:0;width:1920px;height:1080px" data-v="left:0;top:330px;width:1080px;height:810px"><div class="ph" style="background-image:url(assets/roof_hvac.jpg);filter:brightness(.35)"></div><div id="c7tiles" class="abs" style="inset:0"></div>
+      <div class="abs" id="c7tags" style="inset:0;z-index:4"></div></div>
+    <div class="abs h-only" style="inset:0;background:linear-gradient(180deg,rgba(0,0,0,.3),rgba(0,0,0,0) 30%,rgba(0,0,0,0) 55%,rgba(0,0,0,.85))"></div>
+    <div class="abs" data-h="left:120px;top:90px" data-v="left:80px;top:150px"><div class="kick" id="c7k">02 / Roof &amp; facade inspections</div></div>
+    <div class="abs" id="c7cnt" data-h="right:120px;top:84px" data-v="right:80px;top:140px" style="text-align:right"><div class="num" id="c7n" style="font-size:64px;line-height:1">00</div><div class="mono teal" style="margin-top:6px;font-size:13px">Cells scanned</div></div>
+    <div class="abs" data-h="left:1180px;top:790px" data-v="left:80px;top:1220px">
+      <div class="h" data-h="font-size:76px" data-v="font-size:80px">
+        <div class="rv" id="c7l1"><span>Every roof,</span></div>
+        <div class="rv" id="c7l2"><span class="t">every detail.</span></div>
+      </div>
+      <div class="mono rv" id="c7sub" style="margin-top:22px"><span>High resolution imagery · Points tagged · No ladders</span></div>
+    </div>
+  </div>
+
+  <!-- C8 facade mosaic -->
+  <div class="scene" id="c8">
+    <div class="bgblur v-only" style="background-image:url(assets/facade_closeup.jpg)"></div>
+    <div class="abs" id="c8wrap" data-h="left:1040px;top:80px;width:736px;height:920px" data-v="left:170px;top:300px;width:740px;height:925px" style="perspective:1400px"><div id="c8tiles" class="abs" style="inset:0"></div>
+      <div class="abs" id="c8tags" style="inset:0;z-index:4"></div>
+      <div class="fx" id="c8loupe" style="width:240px;height:240px;border-radius:50%;border:2px solid var(--teal);box-shadow:0 0 0 6px rgba(0,0,0,.5),0 0 30px rgba(97,211,196,.6);background-image:url(assets/facade_closeup.jpg);background-repeat:no-repeat;overflow:hidden;z-index:5">
+        <div class="fx" style="left:50%;top:0;width:1px;height:100%;background:rgba(97,211,196,.5)"></div><div class="fx" style="top:50%;left:0;height:1px;width:100%;background:rgba(97,211,196,.5)"></div>
+        <div class="tele" style="position:absolute;right:14px;bottom:12px;color:var(--teal)">2.2×</div></div></div>
+    <div class="abs" data-h="left:120px;top:90px" data-v="left:80px;top:150px"><div class="kick" id="c8k">02 / Roof &amp; facade inspections</div></div>
+    <div class="abs" id="c8cnt" data-h="left:120px;top:300px" data-v="right:80px;top:140px;text-align:right"><div class="num" id="c8n" style="font-size:150px;line-height:1">00</div><div class="mono teal" style="margin-top:6px;font-size:13px">Frames captured</div></div>
+    <div class="abs" data-h="left:120px;top:660px" data-v="left:80px;top:1300px">
+      <div class="h" data-h="font-size:84px" data-v="font-size:80px">
+        <div class="rv" id="c8l1"><span>Facades,</span></div>
+        <div class="rv" id="c8l2"><span class="t">frame by frame.</span></div>
+      </div>
+      <div class="mono rv" id="c8sub" style="margin-top:22px"><span>No lifts · No scaffolding · No downtime</span></div>
+    </div>
+  </div>
+
+  <!-- C9 marketing -->
+  <div class="scene" id="c9">
+    <div class="ph" style="background-image:url(assets/tiltup_warehouse.jpg);filter:brightness(.22) saturate(.7)" data-v="background-position:center 30%"></div>
+    <div class="abs" data-h="left:120px;top:110px" data-v="left:80px;top:150px">
+      <div class="kick" id="c9k">03 / Construction marketing</div>
+      <div class="h" style="margin-top:20px" data-h="font-size:80px" data-v="font-size:76px">
+        <div class="rv" id="c9l1"><span>Show your work.</span></div>
+        <div class="rv" id="c9l2"><span class="t">Win the next bid.</span></div>
+      </div>
+    </div>
+    <div class="dev" id="c9web" data-h="left:590px;top:430px" data-v="left:110px;top:560px" style="width:740px;height:470px;border-radius:10px">
+      <div class="abs" style="left:0;top:0;width:740px;height:34px;background:#1b232a;border-bottom:1px solid rgba(255,255,255,.08)"></div>
+      <div class="skel" style="left:14px;top:13px;width:8px;height:8px;border-radius:50%"></div><div class="skel" style="left:28px;top:13px;width:8px;height:8px;border-radius:50%"></div><div class="skel" style="left:42px;top:13px;width:8px;height:8px;border-radius:50%"></div>
+      <div class="skel" style="left:120px;top:12px;width:500px;height:10px;background:rgba(255,255,255,.08)"></div>
+      <div class="abs" style="left:0;top:34px;width:740px;height:300px;background:url(assets/stage_framing.jpg) center/cover"></div>
+      <div class="abs" style="left:0;top:34px;width:740px;height:300px;background:linear-gradient(90deg,rgba(10,14,17,.85),rgba(10,14,17,0) 60%)"></div>
+      <div class="skel" style="left:28px;top:150px;width:220px;height:14px"></div><div class="skel" style="left:28px;top:174px;width:160px;height:14px"></div>
+      <div class="skel t" style="left:28px;top:208px;width:110px;height:30px;border-radius:4px"></div>
+      <div class="skel" style="left:28px;top:360px;width:200px;height:12px"></div><div class="skel" style="left:28px;top:384px;width:300px;height:8px;background:rgba(255,255,255,.1)"></div>
+      <div class="skel" style="left:460px;top:360px;width:250px;height:60px;background:rgba(255,255,255,.06)"></div>
+      <div class="mono white abs" style="left:28px;bottom:14px;font-size:11px">Website</div>
+    </div>
+    <div class="dev" id="c9pf" data-h="left:280px;top:500px" data-v="left:110px;top:1190px" style="width:270px;height:380px;border-radius:8px">
+      <div class="abs" style="left:0;top:0;width:270px;height:250px;background:url(assets/tiltup_warehouse.jpg) center 40%/cover"></div>
+      <div class="abs" style="left:0;top:120px;width:270px;height:130px;background:linear-gradient(180deg,rgba(20,27,32,0),rgba(20,27,32,1))"></div>
+      <div class="abs" style="left:18px;top:206px;font-weight:700;font-size:15px;letter-spacing:.08em">PROJECT PORTFOLIO</div>
+      <div class="skel" style="left:18px;top:270px;width:180px;height:9px"></div><div class="skel" style="left:18px;top:290px;width:140px;height:9px;background:rgba(255,255,255,.1)"></div>
+      <div class="skel" style="left:18px;top:328px;width:60px;height:6px;background:var(--teal)"></div>
+      <div class="abs" style="left:170px;top:270px;width:82px;height:56px;border-radius:4px;background:url(assets/townhouses.jpg) center/cover"></div>
+      <div class="mono white abs" style="left:18px;bottom:14px;font-size:11px">Proposal</div>
+    </div>
+    <div class="dev" id="c9ph" data-h="left:1400px;top:440px" data-v="left:690px;top:1150px" style="width:240px;height:470px;border-radius:26px">
+      <div class="skel" style="left:96px;top:12px;width:48px;height:6px;border-radius:3px;background:rgba(255,255,255,.1)"></div>
+      <div class="skel" style="left:18px;top:40px;width:22px;height:22px;border-radius:50%;background:var(--teal)"></div>
+      <div class="skel" style="left:48px;top:44px;width:80px;height:8px"></div>
+      <div class="abs" style="left:0;top:76px;width:240px;height:240px;background:url(assets/stage_roof.jpg) center/cover"></div>
+      <div class="abs" style="left:18px;top:330px;color:#ff5c7a;font-size:20px">♥</div><div class="skel" style="left:48px;top:334px;width:14px;height:14px;border-radius:50%"></div>
+      <div class="tele abs" id="c9likes" style="left:18px;top:362px;color:#fff;font-size:12px">1,204 likes</div>
+      <div class="mono white abs" style="left:18px;bottom:14px;font-size:11px">Social</div>
+    </div>
+  </div>
+
+  <!-- C10 kinetic type -->
+  <div class="scene" id="c10">
+    <div class="bgblur v-only" id="c10blur"></div>
+    <div class="fb" data-h="left:0;top:0;width:1920px;height:1080px" data-v="left:0;top:420px;width:1080px;height:810px"><div class="ph" id="c10ph"></div></div>
+    <div class="abs h-only" style="inset:0;background:linear-gradient(180deg,rgba(0,0,0,.25),rgba(0,0,0,.05) 40%,rgba(0,0,0,.75))"></div>
+    <div class="abs" id="c10intro" style="inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center">
+      <div class="kick" id="c10k">04 / Aerial photo &amp; video</div>
+      <div class="h" style="margin-top:22px" data-h="font-size:110px" data-v="font-size:96px"><div class="rv" id="c10l1"><span>Premium aerials</span></div></div>
+    </div>
+    <div class="abs" id="c10wordwrap" data-h="left:120px;top:0;height:1080px" data-v="left:80px;top:1290px;height:400px" style="display:flex;align-items:center">
+      <div><div class="big" id="c10word" data-h="font-size:190px" data-v="font-size:118px" style="white-space:nowrap"></div><div class="mono white" id="c10sub" style="margin-top:22px;font-size:18px"></div></div>
+    </div>
+    <div class="abs num" id="c10idx" data-h="right:120px;bottom:90px;font-size:40px" data-v="right:80px;top:300px;font-size:40px">01 / 05</div>
+  </div>
+
+  <!-- C11 values + marquee -->
+  <div class="scene" id="c11">
+    <div class="abs" data-h="left:120px;top:150px" data-v="left:80px;top:200px"><div class="kick" id="c11k">Why teams choose SkyPivot</div></div>
+    <div class="col" id="col1" data-h="left:120px;top:330px;width:520px" data-v="left:80px;top:360px;width:920px">
+      <svg class="ic" viewBox="0 0 64 64"><path d="M36 4 L14 36 L30 36 L26 60 L50 26 L34 26 Z"/></svg>
+      <div class="ttl">Fast delivery.</div><div class="sub">Photos and 4K video, turned around fast</div><div class="ln"></div>
+    </div>
+    <div class="col" id="col2" data-h="left:700px;top:330px;width:520px" data-v="left:80px;top:740px;width:920px">
+      <svg class="ic" viewBox="0 0 64 64"><circle cx="32" cy="32" r="26"/><circle cx="32" cy="32" r="15"/><circle cx="32" cy="32" r="4"/><path d="M32 2 L32 12 M32 52 L32 62 M2 32 L12 32 M52 32 L62 32"/></svg>
+      <div class="ttl">Consistent results.</div><div class="sub">Same flight path, same angle, every visit</div><div class="ln"></div>
+    </div>
+    <div class="col" id="col3" data-h="left:1280px;top:330px;width:520px" data-v="left:80px;top:1120px;width:920px">
+      <svg class="ic" viewBox="0 0 64 64"><path d="M32 6 L39 24 L58 25 L43 37 L48 56 L32 45 L16 56 L21 37 L6 25 L25 24 Z"/></svg>
+      <div class="ttl">Client satisfaction.</div><div class="sub">Developers · GCs · Architects · Owners</div><div class="ln"></div>
+    </div>
+    <div class="abs" id="c11mq" data-h="left:0;top:800px;height:140px" data-v="left:0;top:1560px;height:120px" style="width:100%;overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;align-items:center">
+      <div class="marq" id="c11m" data-h="font-size:44px" data-v="font-size:34px"></div>
+    </div>
+  </div>
+
+  <!-- C12 end -->
+  <div class="scene" id="c12">
+    <div class="abs" id="e_ring" data-h="left:960px;top:430px" data-v="left:540px;top:800px" style="width:10px;height:10px;border-radius:50%;border:2px solid var(--teal)"></div>
+    <div class="abs" id="e_ring2" data-h="left:960px;top:430px" data-v="left:540px;top:800px" style="width:10px;height:10px;border-radius:50%;border:1px solid rgba(97,211,196,.7)"></div>
+    <div class="abs" id="e_glow" data-h="left:960px;top:430px" data-v="left:540px;top:800px" style="width:1000px;height:1000px;margin:-500px 0 0 -500px;border-radius:50%;background:radial-gradient(circle,rgba(97,211,196,.22),rgba(97,211,196,0) 60%)"></div>
+    <div class="fx" id="e_parts" style="inset:0"></div>
+    <img id="e_logo" src="assets/logo_full.png" class="abs" data-h="left:720px;top:190px;width:480px" data-v="left:270px;top:530px;width:540px" style="transform-origin:50% 50%">
+    <div class="abs" id="e_line" data-h="left:780px;top:626px" data-v="left:360px;top:1020px" style="width:360px;height:1px;background:var(--teal);transform-origin:50% 50%"></div>
+    <div class="abs" data-h="left:0;top:646px;width:1920px" data-v="left:0;top:1046px;width:1080px" style="text-align:center">
+      <div class="rv" id="e_tag" data-h="font-size:64px" data-v="font-size:58px" style="font-weight:700;letter-spacing:-.02em"><span>Let's pivot your project.</span></div>
+      <div class="mono teal rv h-only" id="e_f1" style="margin-top:40px;font-size:17px"><span>Construction progress · Inspections · Construction marketing · Aerial photo &amp; video</span></div>
+      <div class="mono teal rv v-only" id="e_f1" style="margin-top:40px;font-size:16px;line-height:1.9"><span>Construction progress · Inspections<br>Construction marketing · Aerial photo &amp; video</span></div>
+      <div class="mono rv" id="e_f2" data-h="font-size:16px" data-v="font-size:15px" style="margin-top:16px;color:rgba(255,255,255,.7)"><span>Based in New Jersey · FAA Part 107 · OSHA · ICS 100 / 200 / 700</span></div>
+    </div>
+  </div>
+
+  <!-- slam frame -->
+  <div class="scene" id="slam" style="background:var(--teal);z-index:9">
+    <div class="slamtxt" id="slamtxt" data-h="font-size:150px" data-v="font-size:104px"><div id="slamA"></div><small id="slamB"></small></div>
+  </div>
+
+  <!-- HUD -->
+  <div class="abs" id="hud" style="inset:0;pointer-events:none;z-index:10">
+    <div class="corner tl hc" style="left:40px;top:40px"></div><div class="corner tr hc" data-h="left:1850px;top:40px" data-v="left:1010px;top:40px"></div>
+    <div class="corner bl hc" data-h="left:40px;top:1010px" data-v="left:40px;top:1850px"></div><div class="corner br hc" data-h="left:1850px;top:1010px" data-v="left:1010px;top:1850px"></div>
+    <div class="abs" style="left:88px;top:44px;display:flex;align-items:center;gap:12px"><img src="assets/logo_mark.png" style="height:22px;opacity:.9"><span class="mono white" id="hudsec" style="font-size:13px;color:rgba(255,255,255,.75)"></span></div>
+    <div class="mono abs" id="hudtc" style="right:88px;top:45px;font-size:13px;color:rgba(255,255,255,.75)">TC 00:00:00:00</div>
+    <div class="abs" id="hudbar" data-h="left:88px;top:1052px;width:1744px" data-v="left:88px;top:1892px;width:904px" style="height:2px;background:rgba(255,255,255,.12)"><div id="hudbarf" style="position:absolute;left:0;top:0;height:2px;width:0;background:var(--teal);box-shadow:0 0 8px var(--teal)"></div></div>
+  </div>
+  <div class="fx" id="flash" style="inset:0;background:#fff;opacity:0;z-index:13"></div>
+  <div class="fx" id="burst" style="inset:0;background:radial-gradient(circle at 50% 50%,rgba(220,255,250,1) 0%,rgba(97,211,196,.6) 35%,rgba(97,211,196,0) 72%);opacity:0;z-index:13;mix-blend-mode:screen"></div>
+  <div class="fx" style="position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(0,0,0,0) 50%,rgba(0,0,0,.5) 100%)"></div>
+</div>
+<div class="fx" id="grain" style="inset:0;z-index:19;opacity:.07;mix-blend-mode:overlay"></div>
+<div class="abs" id="blackout" style="inset:0;background:#000;opacity:0;z-index:20"></div>
+</div>
+
+<script>
+const V=/[?&]v=1/.test(location.search);const W=V?1080:1920,H=V?1920:1080;
+const $=id=>document.getElementById(id);
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const lerp=(a,b,x)=>a+(b-a)*x;
+const E={lin:x=>x,out:x=>1-Math.pow(1-x,3),outExpo:x=>x>=1?1:1-Math.pow(2,-10*x),inOut:x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2,in:x=>x*x*x,outBack:x=>{const c=1.70158;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)},outQuint:x=>1-Math.pow(1-x,5),inExpo:x=>x<=0?0:Math.pow(2,10*x-10)};
+const R=(t,a,b,e=E.out)=>e(clamp((t-a)/(b-a)));
+const pad=(n,w=2)=>String(n).padStart(w,'0');
+function show(el,on){el.style.display=on?'block':'none'}
+function rnd(i){const x=Math.sin(i*127.1+311.7)*43758.5453;return x-Math.floor(x)}
+const BEAT=0.5;
+
+// ---------- layout ----------
+$('stage').style.width=W+'px';$('stage').style.height=H+'px';
+document.querySelectorAll(V?'.h-only':'.v-only').forEach(e=>e.remove());
+document.querySelectorAll(V?'[data-v]':'[data-h]').forEach(e=>{e.style.cssText+=';'+e.getAttribute(V?'data-v':'data-h')});
+document.querySelectorAll('.rv>span').forEach(sp=>{const walk=n=>{[...n.childNodes].forEach(c=>{if(c.nodeType===3){const frag=document.createDocumentFragment();c.textContent.split(/(\s+)/).forEach(tk=>{if(!tk)return;if(/^\s+$/.test(tk)){frag.appendChild(document.createTextNode(tk))}else{const w=document.createElement('span');w.className='w';w.textContent=tk;frag.appendChild(w)}});n.replaceChild(frag,c)}else if(c.tagName!=='BR')walk(c)})};walk(sp)});
+document.querySelectorAll('.kick').forEach(k=>{k.dataset.full=k.textContent;k.textContent=''});
+function type(id,t,t0,cps=40){const el=$(id);const full=el.dataset.full;const n=Math.floor(Math.max(0,t-t0)*cps);const done=n>=full.length;el.textContent=full.slice(0,n);if(t>=t0&&(!done||t<t0+full.length/cps+.5)){const c=document.createElement('span');c.className='cur';c.style.opacity=Math.floor(t*6)%2?1:.2;el.appendChild(c)}}
+function reveal(id,t,t0,dur=.6,stag=.06){const el=$(id);el.querySelectorAll('.w').forEach((w,i)=>{const p=R(t,t0+i*stag,t0+i*stag+dur,E.outExpo);w.style.transform=`translateY(${(1-p)*110}%) skewY(${(1-p)*6}deg)`;w.style.opacity=p>0?clamp(p*3):0;w.style.filter=`blur(${(1-p)*6}px)`})}
+function pop(el,t,t0,dur=.45){const p=R(t,t0,t0+dur,E.outBack);el.style.opacity=clamp(p*2);el.style.transform=`scale(${lerp(.6,1,p)})`;return p}
+function kb(el,t,t0,t1,s0,s1,x0=0,y0=0,x1=0,y1=0){const p=R(t,t0,t1,E.lin);el.style.transform=`scale(${lerp(s0,s1,p)}) translate(${lerp(x0,x1,p)}px,${lerp(y0,y1,p)}px)`}
+function mkTag(parent,x,y,w,h,label,pos){const t=document.createElement('div');t.className='tag';t.style.cssText=`left:${x}px;top:${y}px;width:${w}px;height:${h}px`;const b=document.createElement('div');b.className='box';b.innerHTML='<i></i>';t.appendChild(b);const l=document.createElement('div');l.className='lab';l.dataset.full=label;l.style.cssText=pos==='above'?`left:0;top:-36px`:pos==='right'?`left:${w+14}px;top:-2px`:pos==='left'?`right:${w+14}px;top:-2px`:`left:0;top:${h+12}px`;t.appendChild(l);parent.appendChild(t);return t}
+function tagAnim(tg,t,t0){const p=R(t,t0,t0+.4,E.outBack);tg.style.opacity=clamp(p*2);tg.firstElementChild.style.transform=`scale(${lerp(2.2,1,p)}) rotate(${(1-p)*25}deg)`;const lab=tg.lastElementChild;const n=Math.floor(Math.max(0,t-t0-.1)*45);lab.textContent=lab.dataset.full.slice(0,n);lab.style.opacity=n>0?1:0}
+
+// ---------- build ----------
+const ASSETS=['golf','cap_slab','cap_steel','cap_plaza','cap_house','cap_foundation','opening_tower','stage_sitework','stage_foundations','stage_framing','stage_roof','townhouses','office','res_tower_dusk','piccolos','roof_hvac','tiltup_warehouse','waterfront_sunset','industrial_warehouse','facade_closeup'];
+(function(){const m=$('mosaic');const inner=document.createElement('div');inner.id='mosaicInner';inner.style.cssText=`position:absolute;left:-400px;top:-400px;width:${W+900}px;height:${H+900}px;transform:rotate(-7deg);display:grid;grid-template-columns:repeat(${V?5:7},1fr);gap:18px;opacity:.11;filter:grayscale(.6) brightness(.9)`;for(let i=0;i<42;i++){const d=document.createElement('div');d.style.cssText=`background:url(assets/${ASSETS[i%ASSETS.length]}.jpg) center/cover;border-radius:4px`;inner.appendChild(d)}m.appendChild(inner);const sh=document.createElement('div');sh.style.cssText='position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(11,15,18,.2),rgba(11,15,18,.95) 75%)';m.appendChild(sh)})();
+(function(){const tiles=[];for(let k=0;k<3;k++){const c=document.createElement('canvas');c.width=c.height=256;const ctx=c.getContext('2d');const im=ctx.createImageData(256,256);for(let i=0;i<im.data.length;i+=4){const v=128+(rnd(i*.37+k*999)-.5)*220;im.data[i]=im.data[i+1]=im.data[i+2]=v;im.data[i+3]=255}ctx.putImageData(im,0,0);tiles.push(`url(${c.toDataURL()})`)}window.__grain=tiles})();
+(function(){for(const [id,n] of [['particles',V?34:46],['c1parts',60],['e_parts',70]]){const c=$(id);for(let i=0;i<n;i++){const d=document.createElement('div');d.className='p';c.appendChild(d)}}})();
+// montage
+const MONT=['opening_tower','cap_slab','roof_hvac','piccolos','stage_framing','industrial_warehouse','facade_closeup','golf'];
+// visits
+const CAPS=[['cap_slab','02'],['cap_steel','06'],['cap_plaza','10'],['cap_foundation','14'],['cap_house','18']];
+// carousel
+const STAGES=[['stage_sitework','01','Site work','Week 02'],['stage_foundations','02','Foundations','Week 10'],['stage_framing','03','Framing','Week 18'],['stage_roof','04','Roof structure','Week 26'],['office','05','Complete','Week 34']];
+const CW=V?700:560,CG=V?40:40,CHh=V?860:520;
+(function(){const row=$('c4row');STAGES.forEach(([a,n,l,w],i)=>{const d=document.createElement('div');d.className='abs c4c';d.style.cssText=`left:${i*(CW+CG)}px;top:0;width:${CW}px;height:${CHh}px;border-radius:8px;overflow:hidden;background:#000;transform-origin:50% 100%`;d.innerHTML=`<div class="ph" style="background-image:url(assets/${a}.jpg)"></div><div class="abs" style="inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 50%,rgba(0,0,0,.85))"></div><div class="abs" style="left:24px;bottom:24px"><div class="num" style="font-size:54px;line-height:1;color:var(--teal)">${n}</div><div style="font-weight:700;font-size:28px;margin-top:8px">${l}</div><div class="mono" style="margin-top:8px;font-size:12px">${w}</div></div>`;row.appendChild(d)})})();
+// hub chips
+const CH=['Developers','General contractors','Subcontractors','Architects','Civil engineers','Construction managers','Owners · Investors'];
+const HUB=V?{cx:540,cy:1040,r:400}:{cx:1260,cy:650,r:420};
+const chips=[];(function(){const c=$('c5chips');CH.forEach((n,i)=>{const d=document.createElement('div');d.className='chip';d.innerHTML='<i></i>'+n+'<b></b>';c.appendChild(d);chips.push(d)})})();
+function hubPos(i){const a=V?(-Math.PI/2+i*(2*Math.PI/7)):(Math.PI*.58+i*(Math.PI*.84/6));const rx=V?HUB.r:HUB.r*1.4,ry=V?HUB.r*1.05:HUB.r*.72;return[HUB.cx+Math.cos(a)*rx,HUB.cy+Math.sin(a)*ry]}
+chips.forEach((d,i)=>{const[x,y]=hubPos(i);d.style.left=x+'px';d.style.top=y+'px';d.style.transform='translate(-50%,-50%)'});
+(function(){const s=$('c5svg');const ns='http://www.w3.org/2000/svg';chips.forEach((d,i)=>{const[x,y]=hubPos(i);const l=document.createElementNS(ns,'line');l.setAttribute('x1',HUB.cx);l.setAttribute('y1',HUB.cy);l.setAttribute('x2',x);l.setAttribute('y2',y);l.setAttribute('stroke','rgba(97,211,196,.55)');l.setAttribute('stroke-width','1.5');l.setAttribute('stroke-dasharray','6 6');l.id='c5ln'+i;s.appendChild(l);const c=document.createElementNS(ns,'circle');c.setAttribute('r','6');c.setAttribute('fill','#61D3C4');c.id='c5pk'+i;c.style.filter='drop-shadow(0 0 6px #61D3C4)';s.appendChild(c)})})();
+// roof tiles
+const RC=V?8:10,RR=V?6:6;
+(function(){const c=$('c7tiles');const fw=V?1080:1920,fh=V?810:1080;for(let r=0;r<RR;r++)for(let q=0;q<RC;q++){const d=document.createElement('div');d.className='tile';d.style.cssText=`left:${q*fw/RC}px;top:${r*fh/RR}px;width:${fw/RC+1}px;height:${fh/RR+1}px;background-image:url(assets/roof_hvac.jpg);background-size:${fw}px ${fh}px;background-position:${-q*fw/RC}px ${-r*fh/RR}px;opacity:0`;c.appendChild(d)}})();
+const K7=1080/740;
+const roofTags=V?[mkTag($('c7tags'),150*K7,195*K7*.75,170*K7,170*K7*.75,'A1  RTU · Condenser','right'),mkTag($('c7tags'),150*K7,385*K7*.75,170*K7,160*K7*.75,'A2  RTU · Condenser','right'),mkTag($('c7tags'),495*K7,150*K7*.75,70*K7,70*K7*.75,'A3  Exhaust vent','above'),mkTag($('c7tags'),478*K7,360*K7*.75,52*K7,52*K7*.75,'A4  Roof drain','right')]
+:[mkTag($('c7tags'),440,360,320,270,'A1  RTU · Condenser','right'),mkTag($('c7tags'),440,650,320,290,'A2  RTU · Condenser','right'),mkTag($('c7tags'),1300,250,150,150,'A3  Exhaust vent','above'),mkTag($('c7tags'),1290,720,80,80,'A4  Roof drain','left')];
+// facade tiles 5x6
+const FC=5,FR=6,FW=V?740:736,FH=V?925:920;
+(function(){const c=$('c8tiles');for(let r=0;r<FR;r++)for(let q=0;q<FC;q++){const d=document.createElement('div');d.className='tile';d.style.cssText=`left:${q*FW/FC}px;top:${r*FH/FR}px;width:${FW/FC+1}px;height:${FH/FR+1}px;background-image:url(assets/facade_closeup.jpg);background-size:${FW}px ${FH}px;background-position:${-q*FW/FC}px ${-r*FH/FR}px;opacity:0`;c.appendChild(d)}})();
+const K8=FW/690;
+const facTags=[mkTag($('c8tags'),300*K8,120*K8,100*K8,330*K8,'C1  Panel joint','right'),mkTag($('c8tags'),30*K8,150*K8,230*K8,120*K8,'C2  Staining · Sealant','below'),mkTag($('c8tags'),460*K8,470*K8,210*K8,250*K8,'C3  Window seal','above')];
+// kinetic words
+const KW=[['RESIDENTIAL','waterfront_sunset','Homes · Residential real estate','center 40%'],['APARTMENTS','res_tower_dusk','Apartment complexes · Multifamily','62% center'],['COMMERCIAL','piccolos','Retail · Restaurants · Business properties','center'],['INDUSTRIAL','industrial_warehouse','Warehouses · Logistics · Manufacturing','center'],['EVENTS','golf','Golf outings · Custom projects · Campaigns','center']];
+// marquee
+(function(){const s='<b>▲</b>Construction progress<b>▲</b>Roof &amp; facade inspections<b>▲</b>Construction marketing<b>▲</b>Aerial photo &amp; video<b>▲</b>Progress reports<b>▲</b>Issue prevention';$('c11m').innerHTML=s+s+s})();
+const SECTIONS=[[0,'Showreel 2026'],[4,'Pre-flight'],[10,'Construction progress'],[21,'Issue prevention'],[25,'Roof & facade inspections'],[30,'Construction marketing'],[33,'Aerial photo & video'],[38.5,'SkyPivot']];
+const CUTS=[0,.25,.5,.75,1,1.25,1.5,1.75,2,10,10.6,11.2,11.8,12.4,13,30.2,30.8,31.4,33.5,34.3,35.1,35.9,36.7];
+const HITS=[2.0,3.5,6.3,24.0,32.4,37.5,42.6];
+const SLAMS=[[3.5,4.0,'DRONE SERVICES','New Jersey · NY · CT · PA'],[24.0,25.0,'SAVE TIME.<br>SAVE MONEY.','Catch it early · Fix it fast'],[32.4,33.0,'BID WON.','Show the work · Win the work'],[37.5,38.5,'FOR EVERY<br>PROPERTY.','Make the property the story']];
+
+// ---------- master seek ----------
+function seek(t){
+  window.__t=t;
+  // HUD
+  const hudOn=t>=4&&t<42.4;$('hud').style.opacity=hudOn?R(t,4,4.6)*(1-R(t,41.9,42.4)):0;
+  let sec=SECTIONS[0][1];for(const [a,s] of SECTIONS)if(t>=a)sec=s;$('hudsec').textContent=sec;
+  $('hudtc').textContent=`TC 00:00:${pad(Math.floor(t))}:${pad(Math.floor((t%1)*30))}`;$('hudbarf').style.width=(t/48*100)+'%';
+  const beat=(t%BEAT),bp=t>=10&&t<42?Math.max(0,1-beat/.14):0;document.querySelectorAll('.hc').forEach(c=>c.style.borderColor=`rgba(${Math.round(lerp(255,97,bp))},${Math.round(lerp(255,211,bp))},${Math.round(lerp(255,196,bp))},${.55+bp*.4})`);
+  // cuts: 2-frame white flash
+  let fl=0;for(const c of CUTS){const d=t-c;if(d>=0&&d<.09)fl=Math.max(fl,.55*(1-d/.09))}$('flash').style.opacity=fl;
+  // hits: burst + shake + punch
+  let bu=0,sx=0,sy=0,sc=1;for(const h of HITS){const d=t-h;if(d>=0&&d<.5){bu=Math.max(bu,.5*Math.exp(-d*22));const a=11*Math.exp(-d*9);sx+=Math.sin(d*90)*a;sy+=Math.cos(d*73)*a*.7;sc+=.03*Math.exp(-d*8)}}$('burst').style.opacity=bu;$('world').style.transform=`translate(${sx}px,${sy}px) scale(${sc})`;
+  const fi=Math.floor(t*30);$('grain').style.backgroundImage=window.__grain[fi%3];$('grain').style.backgroundPosition=`${Math.floor(rnd(fi)*256)}px ${Math.floor(rnd(fi+7)*256)}px`;
+  const dark=(t>=13&&t<21)||(t>=25&&t<30)||(t>=38.5);$('particles').style.opacity=dark?1:0;
+  if(dark){[...$('particles').children].forEach((d,i)=>{const sp=8+rnd(i)*18,x=rnd(i+100)*W+Math.sin(t*.4+i)*30,y=((rnd(i+200)*H-t*sp)%H+H)%H;d.style.transform=`translate(${x}px,${y}px) scale(${1+rnd(i+300)*2.2})`;d.style.opacity=(.25+.5*rnd(i+400))*(.6+.4*Math.sin(t*2+i))})}
+  $('blackout').style.opacity=R(t,47.3,48,E.inOut);
+  const mo=t>=42.4;show($('mosaic'),mo);if(mo){$('mosaic').style.opacity=R(t,42.4,43.2);$('mosaicInner').style.transform=`rotate(-7deg) translate(${-(t-42.4)*9}px,${-(t-42.4)*4}px)`}
+  // slam frames
+  {let on=false;for(const [a,b,A,B] of SLAMS){if(t>=a&&t<b){on=true;$('slamA').innerHTML=A;$('slamB').textContent=B;const p=R(t,a,a+.25,E.outExpo);$('slamtxt').style.transform=`scale(${lerp(1.25,1,p)})`;$('slamtxt').style.letterSpacing=lerp(.02,-.04,p)+'em';$('slamB').style.opacity=R(t,a+.15,a+.4);$('slam').style.opacity=1-R(t,b-.08,b,E.in)}}show($('slam'),on)}
+
+  // C0 montage 0–2
+  {const on=t<2.0;show($('c0'),on);if(on){const k=Math.min(7,Math.floor(t/.25)),ks=k*.25,lp=(t-ks)/.25;$('c0ph').style.backgroundImage=`url(assets/${MONT[k]}.jpg)`;if(V)$('c0blur').style.backgroundImage=`url(assets/${MONT[k]}.jpg)`;$('c0ph').style.transform=`scale(${lerp(1.18,1.08,lp)}) translate(${(k%2?1:-1)*lerp(0,14,lp)}px,${(k%3-1)*lerp(0,8,lp)}px)`;$('c0ph').style.filter=`brightness(${lerp(1.6,1,R(lp,0,.5))}) contrast(1.1)`;$('c0n').textContent=pad(k+1);$('c0n').style.transform=`scale(${1+.25*(1-R(lp,0,.6))})`;$('c0rec').style.opacity=Math.floor(t*8)%2?1:.3}}
+  // C1 logo 2–4
+  {const on=t>=2&&t<3.5;show($('c1'),on);if(on){const cx=V?540:960,cy=V?900:470;const lp=R(t,2.0,2.6,E.outExpo);$('c1mark').style.opacity=lp;$('c1mark').style.transform=`scale(${lerp(2.4,1,lp)}) rotate(${(1-lp)*-30}deg)`;$('c1mark').style.filter=`drop-shadow(0 0 ${lerp(60,22,lp)}px rgba(97,211,196,.9))`;$('c1glow').style.opacity=lp;
+    [...$('c1word').children].forEach((s,i)=>{const p=R(t,2.45+i*.05,2.45+i*.05+.3,E.outBack);s.style.display='inline-block';s.style.opacity=clamp(p*2);s.style.transform=`translateY(${(1-p)*60}px) scale(${lerp(1.8,1,p)})`});
+    [...$('c1parts').children].forEach((d,n)=>{const a=rnd(n)*Math.PI*2,r0=(V?600:900)*(.6+rnd(n+50)*.6);const cv=R(t,2.0,2.1+rnd(n+70)*.5,E.inExpo);const r=r0*(1-cv);d.style.transform=`translate(${cx+Math.cos(a)*r}px,${cy+Math.sin(a)*r}px) scale(${1+rnd(n+30)*2})`;d.style.opacity=cv<1?cv*.9:0})}}
+  // C2 preflight + takeoff 4–10
+  {const i=4.0,o=10.0,on=t>=i&&t<o;show($('c2'),on);if(on){$('c2').style.opacity=1-R(t,o-.2,o,E.in);const tk=R(t,6.3,8.3,E.outQuint);$('c2ph').style.transform=`scale(${lerp(2.6,1.0,tk)}) translate(${lerp(-140,0,tk)}px,${lerp(120,0,tk)}px)`;$('c2ph').style.filter=`brightness(${lerp(.3,1,R(t,6.3,7.3))}) blur(${(1-R(t,6.3,7.2))*5}px)`;$('c2scan').style.opacity=.9*(1-R(t,6.3,7.0));$('c2scan').style.backgroundPosition=`${t*20}px ${t*12}px`;
+    type('c2k',t,4.05);[1,2,3,4].forEach(n=>{const t0=4.5+(n-1)*.4;const el=$('chk'+n);const p=R(t,t0-.3,t0,E.outExpo);el.style.opacity=p;el.style.transform=`translateX(${(1-p)*-40}px)`;const ck=R(t,t0,t0+.25,E.out);el.classList.toggle('on',t>=t0);el.querySelector('path').style.strokeDashoffset=30*(1-ck)});
+    const cl=t>=6.0;$('c2clear').style.opacity=cl?(Math.floor(t*6)%2?1:.5)*(1-R(t,6.9,7.2)):0;$('c2clear').style.transform=`scale(${1+.15*(1-R(t,6.0,6.3,E.outBack))})`;const lo=R(t,6.9,7.4,E.in);$('c2list').style.transform=`translateY(${-lo*500}px)`;$('c2list').style.opacity=1-lo;
+    const alt=Math.round(lerp(0,400,R(t,6.3,8.3,E.outQuint)));$('c2num').textContent=alt;$('c2alt').style.opacity=R(t,6.2,6.5);$('c2tapein').style.top=(-alt*2.1%500)+'px';$('c2num').style.color=alt>=400?'var(--teal)':'';
+    type('c2k2',t,7.8);reveal('c2l1',t,8.0);reveal('c2l2',t,8.15);reveal('c2l3',t,8.7)}}
+  // C3 visit cuts 10–13
+  {const i=10.0,o=13.0,on=t>=i&&t<o;show($('c3'),on);if(on){$('c3').style.opacity=1-R(t,o-.15,o,E.in);const k=Math.min(4,Math.floor((t-10)/.6)),ks=10+k*.6,lp=(t-ks)/.6;$('c3ph').style.backgroundImage=`url(assets/${CAPS[k][0]}.jpg)`;if(V)$('c3blur').style.backgroundImage=`url(assets/${CAPS[k][0]}.jpg)`;$('c3ph').style.transform=`scale(${lerp(1.12,1.04,lp)})`;$('c3ph').style.filter=`brightness(${lerp(1.5,1,R(lp,0,.4))})`;$('c3flash').style.opacity=.6*(1-R(lp,0,.3));$('c3vn').textContent=`VISIT ${pad(k+1)}`;$('c3wk').textContent=`Week ${CAPS[k][1]}`;$('c3visit').style.transform=`translateX(${(1-R(lp,0,.3,E.outExpo))*30}px)`;$('c3ret').style.transform=`rotate(${t*60}deg) scale(${1+.3*(1-R(lp,0,.4))})`;
+    type('c3k',t,10.05);reveal('c3l1',t,10.3);reveal('c3l2',t,10.55);reveal('c3sub',t,11.4)}}
+  // C4 carousel 13–16
+  {const i=13.0,o=16.0,on=t>=i&&t<o;show($('c4'),on);if(on){$('c4').style.opacity=R(t,i,i+.2)*(1-R(t,o-.2,o,E.in));type('c4k',t,13.05);reveal('c4l1',t,13.2);reveal('c4l2',t,13.4);const p=R(t,13.3,15.6,E.inOut);const total=5*(CW+CG);const vis=V?W-160:W-240;const x=(V?80:120)-p*(total-vis-CG);$('c4row').style.transform=`translateX(${x}px)`;document.querySelectorAll('.c4c').forEach((c,n)=>{const e=R(t,13.1+n*.12,13.7+n*.12,E.outExpo);const cx=x+n*(CW+CG)+CW/2;const act=clamp(1-Math.abs(cx-W/2)/(W*.5));c.style.transform=`translateY(${(1-e)*120}px) scale(${lerp(.92,1.0,act)})`;c.style.opacity=e;c.style.filter=`brightness(${lerp(.6,1.1,act)})`;c.firstElementChild.style.transform=`scale(${1+(t-i)*.015})`});const pct=Math.round(p*100);$('c4pct').textContent=pct+'%';$('c4pct').style.color=pct>=100?'var(--teal)':'';$('c4barf').style.width=(p*100)+'%'}}
+  // C5 hub 16–21
+  {const i=16.0,o=21.0,on=t>=i&&t<o;show($('c5'),on);if(on){const zo=R(t,20.7,21.0,E.in);$('c5').style.opacity=R(t,i,i+.2)*(1-zo);$('c5').style.transform=`scale(${1+zo*.1})`;type('c5k',t,16.05);reveal('c5l1',t,16.2);reveal('c5l2',t,16.45);const cp=R(t,16.3,16.9,E.outBack);$('c5card').style.opacity=clamp(cp*2);$('c5card').style.transform=`scale(${lerp(.6,1,cp)})`;
+    chips.forEach((d,n)=>{const t0=17.0+n*.18;const p=R(t,t0,t0+.4,E.outBack);d.style.opacity=clamp(p*2);d.style.transform=`translate(-50%,-50%) scale(${lerp(.4,1,p)})`;const ln=$('c5ln'+n);const[x,y]=hubPos(n);const lp=R(t,t0-.1,t0+.3,E.out);ln.setAttribute('x2',lerp(HUB.cx,x,lp));ln.setAttribute('y2',lerp(HUB.cy,y,lp));ln.style.strokeDashoffset=-t*40;
+      const pk=$('c5pk'+n);const ps=R(t,18.6+n*.12,19.3+n*.12,E.inOut);pk.setAttribute('cx',lerp(HUB.cx,x,ps));pk.setAttribute('cy',lerp(HUB.cy,y,ps));pk.style.opacity=ps>0&&ps<1?1:0;const dl=t>=19.3+n*.12;d.lastElementChild.textContent=dl?'✓':'';d.style.borderColor=dl?'var(--teal)':'';d.style.boxShadow=dl?`0 0 ${18*Math.max(0,1-(t-(19.3+n*.12))/.5)}px rgba(97,211,196,.8)`:''});
+    const st=R(t,18.3,18.6,E.outBack);$('c5sent').style.opacity=st;$('c5sent').style.transform=`rotate(-8deg) scale(${lerp(2.2,1,st)})`}}
+  // C6 cost race 21–24
+  {const i=21.0,o=24.0,on=t>=i&&t<o;show($('c6'),on);if(on){const eL=R(t,i,i+.5,E.outExpo),eR=R(t,i+.1,i+.6,E.outExpo);$('c6L').style.transform=V?`translateY(${-(1-eL)*960}px)`:`translateX(${-(1-eL)*960}px)`;$('c6R').style.transform=V?`translateY(${(1-eR)*960}px)`:`translateX(${(1-eR)*960}px)`;$('c6div').style.transform=V?`scaleX(${R(t,21.4,21.8,E.outExpo)})`:`scaleY(${R(t,21.4,21.8,E.outExpo)})`;pop($('c6vs'),t,21.6);type('c6kL',t,21.5);type('c6kR',t,21.6);
+    const rp=R(t,22.0,23.4,E.inOut);$('c6nR').textContent=Math.round(lerp(1,10,rp))+'×';$('c6bR').firstElementChild.style.width=(10+rp*90)+'%';$('c6nR').style.transform=`scale(${1+.04*Math.sin(t*40)*rp})`;$('c6nL').style.opacity=R(t,21.9,22.2);$('c6nR').style.opacity=R(t,22.0,22.3);$('c6R').style.filter=`brightness(${1+.4*rp*(Math.floor(t*8)%2)})`}}
+  // C7 roof grid 25–27.5
+  {const i=25.0,o=27.5,on=t>=i&&t<o;show($('c7'),on);if(on){$('c7').style.opacity=R(t,i,i+.15)*(1-R(t,o-.15,o,E.in));type('c7k',t,25.05);const tiles=[...$('c7tiles').children];let cnt=0;tiles.forEach((d,n)=>{const r=Math.floor(n/RC),q=n%RC;const t0=25.1+(q+r*.6)*(1.1/(RC+RR*.6));const p=R(t,t0,t0+.25,E.out);d.style.opacity=p;d.style.filter=`brightness(${lerp(2.2,1,p)})`;d.style.outline=p>0&&p<1?'1px solid rgba(97,211,196,.9)':'none';if(t>=t0)cnt++});$('c7n').textContent=pad(cnt);$('c7n').style.color=cnt>=RC*RR?'var(--teal)':'';
+    roofTags.forEach((tg,n)=>tagAnim(tg,t,26.3+n*.22));reveal('c7l1',t,25.4);reveal('c7l2',t,25.6);reveal('c7sub',t,26.6)}}
+  // C8 facade mosaic 27.5–30
+  {const i=27.5,o=30.0,on=t>=i&&t<o;show($('c8'),on);if(on){$('c8').style.opacity=R(t,i,i+.15)*(1-R(t,o-.15,o,E.in));type('c8k',t,27.55);const tiles=[...$('c8tiles').children];let cnt=0;tiles.forEach((d,n)=>{const r=Math.floor(n/FC),q=n%FC;const order=(r%2?FC-1-q:q)+r*FC;const t0=27.6+order*(1.3/30);const p=R(t,t0,t0+.3,E.outBack);d.style.opacity=clamp(p*2);d.style.transform=`perspective(900px) rotateY(${(1-p)*90}deg) scale(${lerp(.7,1,p)})`;d.style.filter=`brightness(${lerp(2,1,p)})`;if(t>=t0)cnt++});$('c8n').textContent=pad(cnt);$('c8n').style.color=cnt>=30?'var(--teal)':'';$('c8n').style.transform=`scale(${1+.1*((t*23)%1<.3?1:0)*(cnt<30?1:0)})`;
+    const TT=[29.1,29.4,29.7];facTags.forEach((tg,n)=>tagAnim(tg,t,TT[n]));const C=facTags.map(tg=>[tg.offsetLeft+tg.offsetWidth/2,tg.offsetTop+tg.offsetHeight/2]);let lx=C[0][0],ly=C[0][1];for(let n=1;n<3;n++){const p=R(t,TT[n]-.25,TT[n]+.05,E.inOut);lx=lerp(lx,C[n][0],p);ly=lerp(ly,C[n][1],p)}const lo=$('c8loupe');const la=R(t,29.0,29.3,E.outBack);const z=2.2,D=240;lo.style.left=(lx-D/2-170)+'px';lo.style.top=(ly-D/2+70)+'px';lo.style.opacity=la;lo.style.transform=`scale(${lerp(.5,1,la)})`;lo.style.backgroundSize=`${FW*z}px auto`;lo.style.backgroundPosition=`${-(lx*z-D/2)}px ${-(ly*z-D/2)}px`;
+    reveal('c8l1',t,27.8);reveal('c8l2',t,28.0);reveal('c8sub',t,28.9)}}
+  // C9 marketing 30–32.4
+  {const i=30.0,o=32.4,on=t>=i&&t<o;show($('c9'),on);if(on){$('c9').style.opacity=R(t,i,i+.15);type('c9k',t,30.05);reveal('c9l1',t,30.2);reveal('c9l2',t,30.45);
+    const dv=(el,t0,rot,ry)=>{const p=R(t,t0,t0+.35,E.outExpo);el.style.opacity=p>0?1:0;el.style.transform=`perspective(1600px) rotate(${rot}deg) rotateY(${ry}deg) scale(${lerp(1.6,1,p)})`;el.style.filter=`brightness(${lerp(2,1,p)})`};dv($('c9web'),30.2,0,0);dv($('c9pf'),30.8,-5,8);dv($('c9ph'),31.4,5,-8);
+    const likes=1204+Math.floor(Math.max(0,t-31.4)*180);$('c9likes').textContent=likes.toLocaleString()+' likes'}}
+  // C10 kinetic 33–37.5
+  {const i=33.0,o=37.5,on=t>=i&&t<o;show($('c10'),on);if(on){const intro=t<33.5;$('c10intro').style.display=intro?'flex':'none';$('c10wordwrap').style.display=intro?'none':'flex';$('c10idx').style.opacity=intro?0:1;
+    if(intro){type('c10k',t,33.0,60);reveal('c10l1',t,33.05,.4,.08);$('c10ph').style.backgroundImage='url(assets/golf.jpg)';$('c10ph').style.filter='brightness(.25) blur(6px)';$('c10ph').style.transform='scale(1.1)';if(V)$('c10blur').style.backgroundImage='url(assets/golf.jpg)'}
+    else{const k=Math.min(4,Math.floor((t-33.5)/.8)),ks=33.5+k*.8,lp=(t-ks)/.8;const[w,a,sub,pos]=KW[k];$('c10ph').style.backgroundImage=`url(assets/${a}.jpg)`;$('c10ph').style.backgroundPosition=pos;if(V)$('c10blur').style.backgroundImage=`url(assets/${a}.jpg)`;$('c10ph').style.transform=`scale(${lerp(1.16,1.06,lp)}) translate(${(k%2?-1:1)*lerp(0,16,lp)}px,0)`;$('c10ph').style.filter=`brightness(${lerp(1.5,.95,R(lp,0,.35))}) contrast(1.08)`;
+      const wd=$('c10word');wd.textContent=w;const e=R(lp,0,.4,E.outExpo);const dir=[[-1,0],[0,1],[1,0],[0,-1],[-1,0]][k];wd.style.transform=`translate(${(1-e)*dir[0]*400}px,${(1-e)*dir[1]*300}px) skewX(${(1-e)*-18*dir[0]}deg)`;wd.style.letterSpacing=lerp(.12,-.04,e)+'em';wd.style.opacity=clamp(e*2);wd.style.textShadow='0 10px 60px rgba(0,0,0,.7)';$('c10sub').textContent=sub;$('c10sub').style.opacity=R(lp,.25,.45);$('c10idx').textContent=`${pad(k+1)} / 05`}}}
+  // C11 values 38.5–42.5
+  {const i=38.5,o=42.5,on=t>=i&&t<o;show($('c11'),on);if(on){$('c11').style.opacity=R(t,i,i+.2)*(1-R(t,o-.3,o,E.in));type('c11k',t,38.55);[1,2,3].forEach(n=>{const c=$('col'+n);const t0=38.8+(n-1)*.35;const p=R(t,t0,t0+.6,E.outExpo);c.style.opacity=p;c.style.transform=`translateY(${(1-p)*90}px)`;const ic=c.querySelector('.ic');[...ic.querySelectorAll('path,circle')].forEach(el=>{const L=200;el.style.strokeDasharray=L;el.style.strokeDashoffset=L*(1-R(t,t0+.1,t0+.8,E.out))});c.querySelector('.ln').style.transform=`scaleX(${R(t,t0+.3,t0+.7,E.outExpo)})`});
+    const mq=R(t,40.3,40.7,E.outExpo);$('c11mq').style.opacity=mq;$('c11mq').style.transform=`translateY(${(1-mq)*60}px)`;const mw=$('c11m').scrollWidth/3;$('c11m').style.transform=`translateX(${-((t-40.3)*(V?260:360))%mw}px)`}}
+  // C12 end 42.4–48
+  {const i=42.4,o=48.1,on=t>=i&&t<o;show($('c12'),on);if(on){const cx=V?540:960,cy=V?800:430;const lp=R(t,42.6,43.5,E.outExpo);const lg=$('e_logo');lg.style.opacity=lp;lg.style.transform=`scale(${lerp(.72,1,lp)+.015*Math.sin(t*2)})`;lg.style.filter=`drop-shadow(0 0 ${lerp(40,18,lp)+6*Math.sin(t*2)}px rgba(97,211,196,${lerp(.9,.45,lp)}))`;
+    [['e_ring',42.65,44.0,2200],['e_ring2',42.9,44.4,2600]].forEach(([id,a,b,sz])=>{const rp=R(t,a,b,E.out);const rd=10+rp*sz;const rg=$(id);rg.style.width=rd+'px';rg.style.height=rd+'px';rg.style.margin=`${-rd/2}px 0 0 ${-rd/2}px`;rg.style.opacity=(1-rp)*.8});$('e_glow').style.opacity=lp*lerp(1,.7,R(t,43.5,46))*(1+.15*Math.sin(t*2));
+    [...$('e_parts').children].forEach((d,n)=>{const a=rnd(n)*Math.PI*2,r0=(V?700:1100)*(0.6+rnd(n+50)*.6);const cv=R(t,42.4,42.6+rnd(n+70)*.4,E.inExpo);const bo=R(t,42.65,43.7,E.out);const r=cv<1?r0*(1-cv):bo*(V?260:380)*(0.5+rnd(n+90));d.style.transform=`translate(${cx+Math.cos(a)*r}px,${cy+Math.sin(a)*r}px) scale(${1+rnd(n+30)*2})`;d.style.opacity=(cv<1?cv*.9:(1-bo)*.9)});
+    $('e_line').style.transform=`scaleX(${R(t,43.5,44.1,E.outExpo)})`;reveal('e_tag',t,43.7,.7);reveal('e_f1',t,44.3);reveal('e_f2',t,44.6)}}
+}
+window.seek=seek;
+if(!navigator.webdriver){const t0=performance.now();(function loop(){const t=((performance.now()-t0)/1000)%48;seek(t);requestAnimationFrame(loop)})();const s=Math.min(innerWidth/W,innerHeight/H);$('stage').style.transform=`scale(${s})`}
+else seek(0);
+</script>
+</body>
+</html>
